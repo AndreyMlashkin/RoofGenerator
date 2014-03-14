@@ -12,3 +12,8 @@
 *.la
 *.a
 *.user
+release
+debug
+/Makefile
+/Makefile.Debug
+/Makefile.Release
