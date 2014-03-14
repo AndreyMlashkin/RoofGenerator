@@ -1,0 +1,25 @@
+{
+   "blocks":{
+	   "leftSlope": {
+		   "char": "/",
+		   "level": 1,
+		   "width": 27,
+		   "height": 7,
+		   "image": ":/img/leftSlope"
+	   },
+	   "rightSlope": {
+           "char": "\\",
+		   "level": -1,
+		   "width": 10,
+		   "height": 10,
+		   "image": ":/img/rightSlope"
+	   },
+	   "horizSlope": {
+		   "char": "-",
+		   "level": 0,
+		   "width": 10,
+		   "height": 10,
+		   "image": ":/img/horizSlope"
+	   }
+   }
+}

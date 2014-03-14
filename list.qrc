@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>data/horizSlope.png</file>
+        <file>data/leftSlope.png</file>
+        <file>data/leftSlopeTube.png</file>
+        <file>data/rightSlope.png</file>
+        <file>data/rightSlopeTube.png</file>
+        <file>data/horizSlopeTube.png</file>
+        <file>data/blocks.json</file>
+    </qresource>
+</RCC>
