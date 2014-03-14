@@ -44,15 +44,10 @@ void GrammarNativeLoader::parceGrammar(const QString& _filename)
             line = in.readLine();
             deleteComments(line);
 
-            parceLine(line, "N");
-//            if(line.contains(QRegExp("N\\s*=\\s*\\{.*\\}")))
-//            {
-//                line.remove(QRegExp("N\\s*=\\s*\\{"));
-//                line.remove(QRegExp("\\}.*$"));
-//                qDebug() << "contains!";
-//            }
-
-//            qDebug() << line;
+            m_unterminalSymbols = parceLine(line, "N");
+            m_terminalSymbols = parceLine(line, "T");
+     //       m_startWords = parceLine(line, "S");
+//            m_unterminalSymbols = parceLine(line, "R");
         }
         while (!line.isNull());
     }
@@ -78,9 +73,9 @@ QVector<Rule *> GrammarNativeLoader::rules() const
     return m_rules;
 }
 
-Word GrammarNativeLoader::startWord() const
+QVector <Word> GrammarNativeLoader::startWords() const
 {
-    return m_startWord;
+    return m_startWords;
 }
 
 bool GrammarNativeLoader::isValid() const

@@ -15,8 +15,8 @@ public:
 
     virtual QStringList unterminalSymbols() const = 0;
     virtual QStringList terminalSymbols() const = 0;
-    virtual QVector<Rule*> rules() const = 0;
-    virtual Word startWord() const = 0;
+    virtual QVector <Rule*> rules() const = 0;
+    virtual QVector <Word> startWords() const = 0;
 
     virtual bool isValid() const = 0;
 };
