@@ -4,9 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core
-
-QT       -= gui
+QT       += core gui
 
 TARGET = roof_proj
 CONFIG   += console
@@ -18,11 +16,25 @@ TEMPLATE = app
 SOURCES += main.cpp \
     grammargenerator.cpp \
     rule.cpp \
-    grammarnativeloader.cpp
+    grammarnativeloader.cpp \
+    basepainter.cpp \
+    elementaryblock.cpp \
+    flowpainter.cpp \
+    roof.cpp
 
 HEADERS += \
     grammargenerator.h \
     rule.h \
     generatorapi.h \
     grammarnativeloader.h \
-    grammarloader.h
+    grammarloader.h \
+    basepainter.h \
+    elementaryblock.h \
+    flowpainter.h \
+    roof.h
+
+RESOURCES += \
+    list.qrc
+
+FORMS += \
+    roof.ui

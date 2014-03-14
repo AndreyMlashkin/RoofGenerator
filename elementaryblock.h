@@ -7,7 +7,7 @@ public:
     ElementaryBlock(QString uri, QChar _character, int _levelChange);
     ~ElementaryBlock();
 private:
-    QImage *image;
+    QImage* image;
     QChar character;
     int levelChange;
     int width;
