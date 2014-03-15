@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
     qDebug() << loader->isValid();
     qDebug() << loader->rules();
-    qDebug() << loader->startWord();
+    qDebug() << loader->startWords();
     qDebug() << loader->terminalSymbols();
     qDebug() << loader->unterminalSymbols();
 // ------------------------
