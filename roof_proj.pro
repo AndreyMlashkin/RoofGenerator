@@ -24,6 +24,7 @@ SOURCES += main.cpp \
     grammarjsonloader.cpp
 
 HEADERS += \
+    generatorapi.h \
     grammargenerator.h \
     rule.h \
     grammarnativeloader.h \

@@ -10,7 +10,10 @@ const QChar commentator = '#';
 
 GrammarNativeLoader::GrammarNativeLoader()
     : GrammarLoader(),
-      m_isValid(false)
+      m_untermParsed(false),
+      m_rulesParsed(false),
+      m_terminalParsed(false),
+      m_startWordParsed(false)
 {
 }
 
@@ -30,13 +33,18 @@ QStringList parceLine(QString _line, QString _startLetter)
     return QStringList();
 }
 
+inline QString parseRulesLine(QString _line)
+{
+
+}
+
 void GrammarNativeLoader::parceGrammar(const QString& _filename)
 {
+    m_untermParsed = m_rulesParsed = m_terminalParsed = m_startWordParsed = false;
+
     QFile data(_filename);
     if (data.open(QFile::ReadOnly))
     {
-        m_isValid = true;
-        qDebug() << "file opend!";
         QTextStream in(&data);
         QString line;
         do
@@ -44,17 +52,39 @@ void GrammarNativeLoader::parceGrammar(const QString& _filename)
             line = in.readLine();
             deleteComments(line);
 
-            m_unterminalSymbols = parceLine(line, "N");
-            m_terminalSymbols = parceLine(line, "T");
-     //       m_startWords = parceLine(line, "S");
-//            m_unterminalSymbols = parceLine(line, "R");
+            if(!m_untermParsed)
+            {
+                m_unterminalSymbols = parceLine(line, "N");
+                if(!m_unterminalSymbols.isEmpty())
+                {
+                    m_untermParsed = true;
+                    continue;
+                }
+            }
+            if(!m_terminalParsed)
+            {
+                m_terminalSymbols = parceLine(line, "T");
+                if(!m_unterminalSymbols.isEmpty())
+                {
+                    m_terminalParsed = true;
+                    continue;
+                }
+            }
+            if(!m_startWordParsed)
+            {
+                m_startWords = parceLine(line, "S");
+                if(!m_startWords.isEmpty())
+                {
+                    m_startWordParsed = true;
+                    continue;
+                }
+            }
         }
         while (!line.isNull());
     }
     else
     {
         qDebug() << "No rules file! " << _filename << "in " << Q_FUNC_INFO;
-        m_isValid = false;
     }
 }
 
@@ -80,5 +110,5 @@ QStringList GrammarNativeLoader::startWords() const
 
 bool GrammarNativeLoader::isValid() const
 {
-    return m_isValid;
+    return m_untermParsed && m_rulesParsed && m_terminalParsed && m_startWordParsed;
 }
