@@ -23,6 +23,7 @@ SOURCES += main.cpp \
     roof.cpp
 
 HEADERS += \
+    generatorapi.h \
     grammargenerator.h \
     rule.h \
     grammarnativeloader.h \

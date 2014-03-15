@@ -1,9 +1,7 @@
 #ifndef GENERATORAPI_H
 #define GENERATORAPI_H
 
-#include <QVector>
-#include <QChar>
-
-typedef QVector<QChar> Word;
+#include <QString>
+typedef QString Word;
 
 #endif // GENERATORAPI_H
