@@ -1,4 +1,5 @@
 #include "grammarjsonloader.h"
+#include "rule.h"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -41,7 +42,7 @@ void GrammarJsonLoader::parceGrammar(const QString &_filename)
     }
     QJsonObject rules = json["rules"].toObject();
     foreach(const QString &key, rules.keys()){
-        QJsonObject rules = rules[key].toString();
+        m_rules.append(new Rule(key, rules[key].toString()));
     }
     m_isValid = 1;
 }
