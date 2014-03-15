@@ -73,7 +73,7 @@ QVector<Rule *> GrammarNativeLoader::rules() const
     return m_rules;
 }
 
-QVector <Word> GrammarNativeLoader::startWords() const
+QStringList GrammarNativeLoader::startWords() const
 {
     return m_startWords;
 }

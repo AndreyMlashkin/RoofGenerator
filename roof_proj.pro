@@ -25,7 +25,6 @@ SOURCES += main.cpp \
 HEADERS += \
     grammargenerator.h \
     rule.h \
-    generatorapi.h \
     grammarnativeloader.h \
     grammarloader.h \
     basepainter.h \

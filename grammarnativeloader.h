@@ -14,7 +14,7 @@ public:
     QStringList unterminalSymbols() const;
     QStringList terminalSymbols() const;
     QVector<Rule*> rules() const;
-    QVector <Word> startWords() const;
+    QStringList startWords() const;
 
     bool isValid() const;
 
@@ -23,7 +23,7 @@ private:
     QStringList m_unterminalSymbols;
     QStringList m_terminalSymbols;
     QVector <Rule*> m_rules;
-    QVector <Word> m_startWords;
+    QStringList m_startWords;
 };
 
 #endif // RULESREADER_H
