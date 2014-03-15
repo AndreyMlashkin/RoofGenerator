@@ -7,5 +7,6 @@
         <file>data/rightSlopeTube.png</file>
         <file>data/horizSlopeTube.png</file>
         <file>data/blocks.json</file>
+        <file>data/rules.json</file>
     </qresource>
 </RCC>

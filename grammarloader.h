@@ -9,7 +9,6 @@ class GrammarLoader
 {
 public:
     GrammarLoader() {}
-    GrammarLoader(const QString& _filename) {parceGrammar(_filename);}
 
     virtual void parceGrammar(const QString& _filename) = 0;
 
