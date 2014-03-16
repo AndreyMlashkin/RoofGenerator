@@ -16,7 +16,7 @@ public:
     QVector <Rule*> rules() const;
     QStringList startWords() const;
 
-    virtual bool isValid() const;
+    bool isValid() const;
 
 private:
     bool m_isValid;

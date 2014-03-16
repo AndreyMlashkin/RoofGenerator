@@ -33,9 +33,26 @@ QStringList parceLine(QString _line, QString _startLetter)
     return QStringList();
 }
 
-inline QString parseRulesLine(QString _line)
+inline QVector <Rule*> parseRules(QString _line, QTextStream& _in)
 {
-
+    if(_line.contains(QRegExp("R\\s*=\\s*\\{")))
+    {
+        QStringList l;
+        QVector <Rule*> ans;
+        do
+        {
+            _line = _in.readLine();
+            if(!_line.contains("->"))
+                continue;
+            l = _line.split(" -> ");
+            l << " ";
+            Rule* r = new Rule(l[0], l[1]);
+            ans << r;
+        }
+        while(!_line.contains("}"));
+        return ans;
+    }
+    return QVector <Rule*>();
 }
 
 void GrammarNativeLoader::parceGrammar(const QString& _filename)
@@ -61,7 +78,7 @@ void GrammarNativeLoader::parceGrammar(const QString& _filename)
                     continue;
                 }
             }
-            if(!m_terminalParsed)
+            else if(!m_terminalParsed)
             {
                 m_terminalSymbols = parceLine(line, "T");
                 if(!m_unterminalSymbols.isEmpty())
@@ -70,7 +87,7 @@ void GrammarNativeLoader::parceGrammar(const QString& _filename)
                     continue;
                 }
             }
-            if(!m_startWordParsed)
+            else if(!m_startWordParsed)
             {
                 m_startWords = parceLine(line, "S");
                 if(!m_startWords.isEmpty())
@@ -79,13 +96,17 @@ void GrammarNativeLoader::parceGrammar(const QString& _filename)
                     continue;
                 }
             }
+            else if(!m_rulesParsed)
+            {
+                m_rules = parseRules(line, in);
+                if(!m_rules.isEmpty())
+                    m_rulesParsed = true;
+            }
         }
         while (!line.isNull());
     }
     else
-    {
-        qDebug() << "No rules file! " << _filename << "in " << Q_FUNC_INFO;
-    }
+        qDebug() << "No grammar file! " << _filename << "in " << Q_FUNC_INFO;
 }
 
 QStringList GrammarNativeLoader::unterminalSymbols() const

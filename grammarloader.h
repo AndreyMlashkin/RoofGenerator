@@ -10,7 +10,7 @@ class GrammarLoader
 public:
     GrammarLoader() {}
 
-    virtual void parceGrammar(const QString& _filename) = 0;
+    virtual void parceGrammar(const QString&) = 0;
 
     virtual QStringList unterminalSymbols() const = 0;
     virtual QStringList terminalSymbols() const = 0;
