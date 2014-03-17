@@ -9,6 +9,7 @@ class GrammarLoader
 {
 public:
     GrammarLoader() {}
+//    virtual ~GrammarLoader() = 0; !!! need refactor!!!
 
     virtual void parceGrammar(const QString&) = 0;
 

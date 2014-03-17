@@ -10,6 +10,7 @@ class GrammarGenerator
 {
 public:
     GrammarGenerator();
+    ~GrammarGenerator();
 
     void readGrammar(const QString& _filename);
     void generate(int _depth);
@@ -26,6 +27,8 @@ private:
     GrammarLoader* getLoader(LoaderType _type);
 
 private:
+    QVector< QVector<Word> > m_generatedWords; // by levels.
+
     GrammarLoader* m_loader;
 };
 

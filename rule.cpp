@@ -23,3 +23,14 @@ bool Rule::isValid() const
 {
     return m_isValid;
 }
+
+QVector<Word> Rule::apply(const Word& _source) const
+{
+    int ind;
+    while(ind = _source.indexOf(m_leftSide))
+    {
+
+    }
+
+
+}
