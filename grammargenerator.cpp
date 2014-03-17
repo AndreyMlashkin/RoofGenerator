@@ -45,18 +45,48 @@ void GrammarGenerator::generate(int _depth)
                m_generatedWords[i+1] += rule->apply(s);
             }
         }
-
     }
 }
 
 QString GrammarGenerator::getWord(int _num, int _depth) const
 {
-    return 0;
+    if(_depth == -1)
+    {
+        int i = 0;
+        while((_num -= m_generatedWords[i].count()) >= 0)
+            i++;
+
+        _num += m_generatedWords[i].count();
+        return m_generatedWords[i][_num];
+
+/*        for(int i = 0; i < m_generatedWords.count(); i++)
+        {
+            _num -= m_generatedWords[i].count();
+            if(_num <= 0)
+            {
+                _num += m_generatedWords[i].count();
+                break;
+            }
+        }
+*/
+
+    }
+    else
+        return m_generatedWords[_depth][_num];
 }
 
 int GrammarGenerator::wordCount(int _depth) const
 {
-    return 0;
+    if(_depth == -1)
+    {
+        int count = 0;
+        for(int i = 0; i < m_generatedWords.count(); i++)
+            count += m_generatedWords[i].count();
+        return count;
+    }
+    else
+        return m_generatedWords[_depth].count();
+
 }
 
 bool GrammarGenerator::isValid() const

@@ -27,10 +27,10 @@ bool Rule::isValid() const
 QVector<Word> Rule::apply(const Word& _source) const
 {
     int ind;
+    QVector<Word> generated;
     while(ind = _source.indexOf(m_leftSide))
     {
 
     }
-
-
+    return generated;
 }
