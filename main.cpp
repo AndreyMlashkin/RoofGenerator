@@ -3,26 +3,17 @@
 
 #include "grammargenerator.h"
 
-#include "grammarnativeloader.h"
-
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-// ------Для теста------------------
-    GrammarLoader* loader = new GrammarNativeLoader();
-    loader->parceGrammar("rules.txt");
-
-    qDebug() << loader->isValid();
-    qDebug() << loader->rules();
-    qDebug() << loader->startWords();
-    qDebug() << loader->terminalSymbols();
-    qDebug() << loader->unterminalSymbols();
-// ------------------------
-
-
     GrammarGenerator g;
-    g.readGrammar("roofGrammar.txt");
+    g.readGrammar("rules.txt");
+    qDebug() << g.isValid();
+
+    g.readGrammar("://data/rules.json");
+    qDebug() << g.isValid();
+
     g.generate(5);
 
     for(int i = 0; i < g.wordCount(); i++)

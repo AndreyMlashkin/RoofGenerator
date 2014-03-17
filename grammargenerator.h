@@ -2,10 +2,9 @@
 #define GRAMMARGENERATOR_H
 
 #include <QString>
-#include <QVector>
-
 #include "generatorapi.h"
-#include "rule.h"
+
+class GrammarLoader;
 
 class GrammarGenerator
 {
@@ -18,15 +17,16 @@ public:
     QString getWord(int _num, int _depth = -1) const; // -1 means doesnot matter.
     int wordCount(int _depth = -1) const;
 
-private:
-    void tryUseRule(const Rule& _rule, const Word& _word);
+    bool isValid() const;
 
 private:
-    int m_unterminalCount;
-    int m_terminalCount;
+//    void tryUseRule(const Rule& _rule, const Word& _word);
 
-    QVector<Rule*> m_rules;
+    enum LoaderType {Json, Native};
+    GrammarLoader* getLoader(LoaderType _type);
 
+private:
+    GrammarLoader* m_loader;
 };
 
 #endif // GRAMMARGENERATOR_H
