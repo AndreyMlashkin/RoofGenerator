@@ -19,6 +19,5 @@ int main(int argc, char *argv[])
     for(int i = 0; i < g.wordCount(); i++)
         qDebug() << g.getWord(i);
 
-
     return a.exec();
 }

@@ -3,8 +3,9 @@
 
 #include <QWidget>
 
-namespace Ui {
-class roof;
+namespace Ui
+{
+    class roof;
 }
 
 class roof : public QWidget

@@ -2,6 +2,7 @@
 #define GRAMMARGENERATOR_H
 
 #include <QString>
+#include <QVector>
 #include "generatorapi.h"
 
 class GrammarLoader;
@@ -21,8 +22,6 @@ public:
     bool isValid() const;
 
 private:
-//    void tryUseRule(const Rule& _rule, const Word& _word);
-
     enum LoaderType {Json, Native};
     GrammarLoader* getLoader(LoaderType _type);
 

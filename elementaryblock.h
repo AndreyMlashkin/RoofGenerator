@@ -1,6 +1,8 @@
 #ifndef ELEMENTARYBLOCK_H
 #define ELEMENTARYBLOCK_H
-#include <QImage>
+
+class QImage;
+
 class ElementaryBlock
 {
 public:

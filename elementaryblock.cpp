@@ -1,8 +1,6 @@
-#include "elementaryblock.h"
+#include <QImage>
 
-/*RoofBlock::roofblock()
-{
-}*/
+#include "elementaryblock.h"
 
 ElementaryBlock::ElementaryBlock(QString uri, QChar _character, int _levelChange):
     character(_character), levelChange(_levelChange)

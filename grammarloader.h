@@ -19,6 +19,9 @@ public:
     virtual QStringList startWords() const = 0;
 
     virtual bool isValid() const = 0;
+
+private:
+    GrammarLoader& operator =(const GrammarLoader&) {}
 };
 
 #endif // GrammarLoader_H

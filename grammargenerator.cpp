@@ -18,20 +18,27 @@ GrammarGenerator::~GrammarGenerator()
 void GrammarGenerator::readGrammar(const QString& _filename)
 {
     LoaderType type = LoaderType(-1);
-    if(_filename.contains("txt")) // regexp requied...
-        type = Native;
-    else if(_filename.contains("json")) //.*\\.json$
-        type = Json;
-    else
-        qDebug() << "Invalid file type! " << Q_FUNC_INFO;
-
+    try
+    {
+        if(_filename.contains(QRegExp(".*\\.txt")))
+            type = Native;
+        else if(_filename.contains(QRegExp("\\.json$")))
+            type = Json;
+        else
+            qDebug() << "Invalid file type! " << Q_FUNC_INFO;
+    }
+    catch(...)
+    {
+        qDebug() << "error opening file";
+    }
     delete m_loader;
     m_loader = getLoader(type);
-    m_loader->parceGrammar(_filename);
+    if(m_loader)
+        m_loader->parceGrammar(_filename);
 }
 
 void GrammarGenerator::generate(int _depth)
-{
+{ 
     m_generatedWords.resize(_depth + 1);
     foreach(QString s, m_loader->startWords())
         m_generatedWords[0] << s;
@@ -58,18 +65,6 @@ QString GrammarGenerator::getWord(int _num, int _depth) const
 
         _num += m_generatedWords[i].count();
         return m_generatedWords[i][_num];
-
-/*        for(int i = 0; i < m_generatedWords.count(); i++)
-        {
-            _num -= m_generatedWords[i].count();
-            if(_num <= 0)
-            {
-                _num += m_generatedWords[i].count();
-                break;
-            }
-        }
-*/
-
     }
     else
         return m_generatedWords[_depth][_num];
