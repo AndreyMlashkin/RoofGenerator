@@ -39,7 +39,7 @@ inline int findNextInclusion(const Word& _word, const QString& _subStr, int _fro
         }
 
         if(j == _subStr.size())
-            return i+j - 1;
+            return i;
     }
     return -1;
 }
@@ -52,7 +52,6 @@ QVector<Word> Rule::apply(const Word& _source) const
    while((ind = findNextInclusion(_source, m_leftSide, ind)) != -1)
    {
        QString tmp = _source;
-       //tmp.resize(ind + m_leftSide.count() + 1);
        tmp.replace(ind, m_leftSide.count(), m_rightSide);
        generated << tmp;
        ind++;
