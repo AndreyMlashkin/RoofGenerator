@@ -39,6 +39,8 @@ void GrammarGenerator::readGrammar(const QString& _filename)
 
 void GrammarGenerator::generate(int _depth)
 { 
+    if(!m_loader)
+        return;
     m_generatedWords.resize(_depth + 1);
     foreach(QString s, m_loader->startWords())
         m_generatedWords[0] << s;
@@ -52,6 +54,7 @@ void GrammarGenerator::generate(int _depth)
                m_generatedWords[i+1] += rule->apply(s);
             }
         }
+        qDebug() << "level " << i << "done";
     }
 }
 

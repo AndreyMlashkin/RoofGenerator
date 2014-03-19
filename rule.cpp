@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "rule.h"
 
 int indexOfCharLessThenNull(const Word& _word)
@@ -24,13 +25,39 @@ bool Rule::isValid() const
     return m_isValid;
 }
 
+inline int findNextInclusion(const Word& _word, const QString& _subStr, int _fromPos = 0)
+{
+    for(int i = _fromPos; i < _word.size(); i++)
+    {
+        int j = 0;
+        while(_word[i+j] == _subStr[j])
+        {
+            j++;
+            bool isOutOfLimit = (i+j >= _word.size()) || (j >= _subStr.size());
+            if(isOutOfLimit)
+                break;
+        }
+
+        if(j == _subStr.size())
+            return i+j - 1;
+    }
+    return -1;
+}
+
 QVector<Word> Rule::apply(const Word& _source) const
 {
-    int ind;
-    QVector<Word> generated;
-    while(ind = _source.indexOf(m_leftSide))
-    {
+   int ind = 0;
+   QVector<Word> generated;
 
-    }
-    return generated;
+   while((ind = findNextInclusion(_source, m_leftSide, ind)) != -1)
+   {
+       static int count = 0;
+       qDebug() << count++;
+       QString tmp = _source;
+       //tmp.resize(ind + m_leftSide.count() + 1);
+       tmp.replace(ind, m_leftSide.count(), m_rightSide);
+       generated << tmp;
+       ind++;
+   }
+   return generated;
 }

@@ -11,10 +11,10 @@ int main(int argc, char *argv[])
     g.readGrammar("rules.txt");
     qDebug() << g.isValid();
 
-    g.readGrammar("://data/rules.json");
-    qDebug() << g.isValid();
+//    g.readGrammar("://data/rules.json");
+//    qDebug() << g.isValid();
 
-    g.generate(5);
+    g.generate(4);
 
     for(int i = 0; i < g.wordCount(); i++)
         qDebug() << g.getWord(i);
