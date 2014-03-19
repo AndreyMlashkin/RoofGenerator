@@ -51,7 +51,10 @@ void GrammarGenerator::generate(int _depth)
         {
             foreach(Rule* rule, m_loader->rules())
             {
-               m_generatedWords[i+1] += rule->apply(s);
+               QVector<Word> generated = rule->apply(s);
+               if(!generated.isEmpty())
+                    qDebug() << generated;
+               m_generatedWords[i+1] += generated;//rule->apply(s);
             }
         }
         qDebug() << "level " << i << "done";

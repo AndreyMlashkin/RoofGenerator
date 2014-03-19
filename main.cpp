@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 //    g.readGrammar("://data/rules.json");
 //    qDebug() << g.isValid();
 
-    g.generate(4);
+    g.generate(3);
 
     for(int i = 0; i < g.wordCount(); i++)
         qDebug() << g.getWord(i);

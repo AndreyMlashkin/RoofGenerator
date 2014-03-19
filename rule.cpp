@@ -51,8 +51,6 @@ QVector<Word> Rule::apply(const Word& _source) const
 
    while((ind = findNextInclusion(_source, m_leftSide, ind)) != -1)
    {
-       static int count = 0;
-       qDebug() << count++;
        QString tmp = _source;
        //tmp.resize(ind + m_leftSide.count() + 1);
        tmp.replace(ind, m_leftSide.count(), m_rightSide);
