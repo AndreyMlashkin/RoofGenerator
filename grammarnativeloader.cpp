@@ -4,6 +4,7 @@
 #include <QStringList>
 
 #include "grammarnativeloader.h"
+#include "grammarloaderprivate.h"
 #include "rule.h"
 
 const QChar commentator = '#';
@@ -14,8 +15,7 @@ GrammarNativeLoader::GrammarNativeLoader()
       m_rulesParsed(false),
       m_terminalParsed(false),
       m_startWordParsed(false)
-{
-}
+{}
 
 void inline deleteComments(QString& _str)
 {
@@ -71,8 +71,8 @@ void GrammarNativeLoader::parceGrammar(const QString& _filename)
 
             if(!m_untermParsed)
             {
-                m_unterminalSymbols = parceLine(line, "N");
-                if(!m_unterminalSymbols.isEmpty())
+                p->unterminalSymbols = parceLine(line, "N");
+                if(!p->unterminalSymbols.isEmpty())
                 {
                     m_untermParsed = true;
                     continue;
@@ -80,8 +80,8 @@ void GrammarNativeLoader::parceGrammar(const QString& _filename)
             }
             else if(!m_terminalParsed)
             {
-                m_terminalSymbols = parceLine(line, "T");
-                if(!m_unterminalSymbols.isEmpty())
+                p->terminalSymbols = parceLine(line, "T");
+                if(!p->unterminalSymbols.isEmpty())
                 {
                     m_terminalParsed = true;
                     continue;
@@ -89,8 +89,8 @@ void GrammarNativeLoader::parceGrammar(const QString& _filename)
             }
             else if(!m_startWordParsed)
             {
-                m_startWords = parceLine(line, "S");
-                if(!m_startWords.isEmpty())
+                p->startWords = parceLine(line, "S");
+                if(!p->startWords.isEmpty())
                 {
                     m_startWordParsed = true;
                     continue;
@@ -98,8 +98,8 @@ void GrammarNativeLoader::parceGrammar(const QString& _filename)
             }
             else if(!m_rulesParsed)
             {
-                m_rules = parseRules(line, in);
-                if(!m_rules.isEmpty())
+                p->rules = parseRules(line, in);
+                if(!p->rules.isEmpty())
                     m_rulesParsed = true;
             }
         }
@@ -107,29 +107,6 @@ void GrammarNativeLoader::parceGrammar(const QString& _filename)
     }
     else
         qDebug() << "No grammar file! " << _filename << "in " << Q_FUNC_INFO;
-}
 
-QStringList GrammarNativeLoader::unterminalSymbols() const
-{
-    return m_unterminalSymbols;
-}
-
-QStringList GrammarNativeLoader::terminalSymbols() const
-{
-    return m_terminalSymbols;
-}
-
-QVector<Rule *> GrammarNativeLoader::rules() const
-{
-    return m_rules;
-}
-
-QStringList GrammarNativeLoader::startWords() const
-{
-    return m_startWords;
-}
-
-bool GrammarNativeLoader::isValid() const
-{
-    return m_untermParsed && m_rulesParsed && m_terminalParsed && m_startWordParsed;
+    p->isValid = m_untermParsed && m_rulesParsed && m_terminalParsed && m_startWordParsed;
 }

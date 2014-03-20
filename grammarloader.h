@@ -2,26 +2,28 @@
 #define RULESLOADER_H
 
 #include <QStringList>
+#include <QVector>
 
 class Rule;
+struct GrammarLoaderPrivate;
 
 class GrammarLoader
 {
 public:
-    GrammarLoader() {}
-//    virtual ~GrammarLoader() = 0; !!! need refactor!!!
+    GrammarLoader();
+    virtual ~GrammarLoader();
 
     virtual void parceGrammar(const QString&) = 0;
 
-    virtual QStringList unterminalSymbols() const = 0;
-    virtual QStringList terminalSymbols() const = 0;
-    virtual QVector <Rule*> rules() const = 0;
-    virtual QStringList startWords() const = 0;
+    QStringList unterminalSymbols() const;
+    QStringList terminalSymbols() const;
+    QVector <Rule*> rules() const;
+    QStringList startWords() const;
 
-    virtual bool isValid() const = 0;
+    bool isValid() const;
 
-private:
-    GrammarLoader& operator =(const GrammarLoader&) {}
+protected:
+    GrammarLoaderPrivate* p;
 };
 
 #endif // GrammarLoader_H

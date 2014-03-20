@@ -21,7 +21,9 @@ SOURCES += main.cpp \
     elementaryblock.cpp \
     flowpainter.cpp \
     roof.cpp \
-    grammarjsonloader.cpp
+    grammarjsonloader.cpp \
+    grammarloader.cpp \
+    grammarloaderprivate.cpp
 
 HEADERS += \
     generatorapi.h \
@@ -33,7 +35,8 @@ HEADERS += \
     elementaryblock.h \
     flowpainter.h \
     roof.h \
-    grammarjsonloader.h
+    grammarjsonloader.h \
+    grammarloaderprivate.h
 
 RESOURCES += \
     list.qrc

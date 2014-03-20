@@ -10,8 +10,8 @@ int main(int argc, char *argv[])
     GrammarGenerator g;
     g.readGrammar("rules.txt");
 
-//    g.readGrammar("://data/rules.json");
-//    qDebug() << g.isValid();
+    //g.readGrammar("://data/rules.json");
+    qDebug() << g.isValid();
 
     g.generate(3);
 

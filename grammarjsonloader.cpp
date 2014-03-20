@@ -1,21 +1,24 @@
-#include "grammarjsonloader.h"
-#include "rule.h"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QFile>
 #include <QDebug>
 
-GrammarJsonLoader::GrammarJsonLoader(): m_isValid(0)
-{
-}
+#include "grammarjsonloader.h"
+#include "grammarloaderprivate.h"
+#include "rule.h"
+
+GrammarJsonLoader::GrammarJsonLoader()
+    : GrammarLoader()
+{}
 
 void GrammarJsonLoader::parceGrammar(const QString &_filename)
 {
     QFile jsonFile(_filename);
-    if (!jsonFile.open(QIODevice::ReadOnly)) {
+    if (!jsonFile.open(QIODevice::ReadOnly))
+    {
         qWarning("Couldn't open file.");
-        m_isValid = 0;
+        p->isValid = false;
         return;
     }
     QJsonParseError error;
@@ -24,50 +27,25 @@ void GrammarJsonLoader::parceGrammar(const QString &_filename)
     QJsonDocument loadDoc(QJsonDocument::fromJson(saveData, &error));
     if(error.error != QJsonParseError::NoError){
         qDebug()<<error.errorString();
-        m_isValid = 0;
+        p->isValid = false;
         return;
     }
     QJsonObject json = loadDoc.object();
     QJsonArray nonTerminal = json["nonterminal"].toArray();
     foreach(const QJsonValue &elem, nonTerminal){
-        m_unterminalSymbols.append(elem.toString());
+        p->unterminalSymbols.append(elem.toString());
     }
     QJsonArray terminal = json["terminal"].toArray();
     foreach(const QJsonValue &elem, terminal){
-        m_terminalSymbols.append(elem.toString());
+        p->terminalSymbols.append(elem.toString());
     }
     QJsonArray start = json["start"].toArray();
     foreach(const QJsonValue &elem, start){
-        m_startWords.append(elem.toString());
+        p->startWords.append(elem.toString());
     }
     QJsonObject rules = json["rules"].toObject();
     foreach(const QString &key, rules.keys()){
-        m_rules.append(new Rule(key, rules[key].toString()));
+        p->rules.append(new Rule(key, rules[key].toString()));
     }
-    m_isValid = 1;
-}
-
-QStringList GrammarJsonLoader::unterminalSymbols() const
-{
-    return m_unterminalSymbols;
-}
-
-QStringList GrammarJsonLoader::terminalSymbols() const
-{
-    return m_terminalSymbols;
-}
-
-QVector<Rule *> GrammarJsonLoader::rules() const
-{
-    return m_rules;
-}
-
-QStringList GrammarJsonLoader::startWords() const
-{
-    return m_startWords;
-}
-
-bool GrammarJsonLoader::isValid() const
-{
-    return m_isValid;
+    p->isValid = true;
 }

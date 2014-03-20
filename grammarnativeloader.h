@@ -11,19 +11,7 @@ public:
     GrammarNativeLoader();
     void parceGrammar(const QString& _filename);
 
-    QStringList unterminalSymbols() const;
-    QStringList terminalSymbols() const;
-    QVector<Rule*> rules() const;
-    QStringList startWords() const;
-
-    bool isValid() const;
-
 private:
-    QStringList m_unterminalSymbols;
-    QStringList m_terminalSymbols;
-    QVector <Rule*> m_rules;
-    QStringList m_startWords;
-
     bool m_untermParsed;
     bool m_rulesParsed;
     bool m_terminalParsed;
