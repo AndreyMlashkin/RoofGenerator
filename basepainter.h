@@ -2,7 +2,8 @@
 #define BASEPAINTER_H
 
 #include <QMap>
-#include <QChar>
+#include <QString>
+#include <QGraphicsScene>
 
 class ElementaryBlock;
 class QPainter;
@@ -10,20 +11,17 @@ class QPainter;
 class BasePainter
 {
 public:
-    BasePainter(){};
-    BasePainter(QString blockFile);
+    BasePainter(){}
     ~BasePainter();
 
-
-    virtual void paint(QPainter* painter) = 0;
+    virtual void paint(QString rawString, QGraphicsScene* scene) = 0;
     int loadBlocks(QString blockFile);
 private:
     bool check();
-
-
+protected:
     int currentLevel;
     int currentElem;
-    QMap<QChar, ElementaryBlock*> blockList;
+    QMap<QString, ElementaryBlock*> blockList;
 };
 
 #endif // BASEPAINTER_H

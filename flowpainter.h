@@ -7,7 +7,7 @@ class FlowPainter : public BasePainter
 {
 public:
     FlowPainter();
-    void paint(QPainter* t){};
+    void paint(QString rawString, QGraphicsScene *scene);
 };
 
 #endif // FLOWPAINTER_H

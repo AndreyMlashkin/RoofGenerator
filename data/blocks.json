@@ -3,23 +3,32 @@
 	   "leftSlope": {
 		   "char": "/",
 		   "level": 1,
-		   "width": 27,
-		   "height": 7,
-		   "image": ":/img/leftSlope"
+           "image": ":/data/leftSlope.png"
 	   },
 	   "rightSlope": {
            "char": "\\",
 		   "level": -1,
-		   "width": 10,
-		   "height": 10,
-		   "image": ":/img/rightSlope"
+           "image": ":/data/rightSlope.png"
 	   },
 	   "horizSlope": {
 		   "char": "-",
 		   "level": 0,
-		   "width": 10,
-		   "height": 10,
-		   "image": ":/img/horizSlope"
-	   }
+           "image": ":/data/horizSlope.png"
+       },
+        "leftSlopeTube": {
+            "char": "/|",
+            "level": 1,
+            "image": ":/data/leftSlopeTube.png"
+        },
+        "rightSlopeTube": {
+            "char": "\\|",
+            "level": -1,
+            "image": ":/data/rightSlopeTube.png"
+        },
+        "horizSlopeTube": {
+            "char": "-|",
+            "level": 0,
+            "image": ":/data/horizSlopeTube.png"
+        }
    }
 }

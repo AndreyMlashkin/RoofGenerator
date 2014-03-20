@@ -2,6 +2,9 @@
 #define ROOF_H
 
 #include <QWidget>
+#include <QString>
+#include <QGraphicsScene>
+#include "flowpainter.h"
 
 namespace Ui
 {
@@ -17,7 +20,9 @@ public:
     ~roof();
 
 private:
+    BasePainter *painter;
     Ui::roof *ui;
+    QGraphicsScene *scene;
 };
 
 #endif // ROOF_H

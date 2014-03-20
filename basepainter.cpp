@@ -6,10 +6,6 @@
 #include <QFile>
 #include <QStringList>
 #include <QDebug>
-BasePainter::BasePainter(QString blockFile)
-{
-    loadBlocks(blockFile);
-}
 
 bool BasePainter::check()
 {
@@ -37,13 +33,13 @@ int BasePainter::loadBlocks(QString blockFile)
     foreach(const QString &key, blocks.keys()){
         QJsonObject block = blocks[key].toObject();
 
-        ElementaryBlock *eBlock = new ElementaryBlock(block["image"].toString(), block["char"].toString()[0], block["level"].toInt());
-        blockList.insert(block["char"].toString()[0], eBlock);
+        ElementaryBlock *eBlock = new ElementaryBlock(block["image"].toString(), block["char"].toString(), block["level"].toInt());
+        blockList.insert(block["char"].toString(), eBlock);
     }
     return true;
 }
-
+//Вылетает!
 BasePainter::~BasePainter(){
-    foreach (ElementaryBlock *value, blockList)
-        delete value;
+    qDeleteAll( blockList );
+    blockList.clear();
 }
