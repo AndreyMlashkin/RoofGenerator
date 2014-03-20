@@ -45,7 +45,13 @@ void GrammarJsonLoader::parceGrammar(const QString &_filename)
     }
     QJsonObject rules = json["rules"].toObject();
     foreach(const QString &key, rules.keys()){
-        p->rules.append(new Rule(key, rules[key].toString()));
+        if(rules[key].isArray()){
+            foreach(const QJsonValue &arrayElem, rules[key].toArray()){
+                p->rules.append(new Rule(key, arrayElem.toString()));
+            }
+        }else{
+            p->rules.append(new Rule(key, rules[key].toString()));
+        }
     }
     p->isValid = true;
 }
