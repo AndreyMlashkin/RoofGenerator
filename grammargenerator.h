@@ -26,7 +26,7 @@ private:
     GrammarLoader* getLoader(LoaderType _type);
 
 private:
-    QVector< QVector<Word> > m_generatedWords; // by levels.
+    QVector <QVector<Word> > m_generatedWords; // by levels.
 
     GrammarLoader* m_loader;
 };

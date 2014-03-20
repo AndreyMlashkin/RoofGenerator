@@ -13,11 +13,9 @@ public:
     QVector<Word> apply(const Word& _source) const;
 
 private:
-    bool m_isValid;
-
     const Word m_leftSide;
-    const int m_unterminalIndex;
     const Word m_rightSide;
+    bool m_isValid;
 };
 
 #endif // RULE_H
