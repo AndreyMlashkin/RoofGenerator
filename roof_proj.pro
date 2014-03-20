@@ -16,27 +16,27 @@ TEMPLATE = app
 SOURCES += main.cpp \
     grammargenerator.cpp \
     rule.cpp \
-    grammarnativeloader.cpp \
     basepainter.cpp \
     elementaryblock.cpp \
     flowpainter.cpp \
     roof.cpp \
-    grammarjsonloader.cpp \
-    grammarloader.cpp \
-    grammarloaderprivate.cpp
+    grammarloader\grammarloader.cpp \
+    grammarloader\grammarloaderprivate.cpp \
+    grammarloader\grammarnativeloader.cpp \
+    grammarloader\grammarjsonloader.cpp
 
 HEADERS += \
     generatorapi.h \
     grammargenerator.h \
     rule.h \
-    grammarnativeloader.h \
-    grammarloader.h \
     basepainter.h \
     elementaryblock.h \
     flowpainter.h \
     roof.h \
-    grammarjsonloader.h \
-    grammarloaderprivate.h
+    grammarloader\grammarloader.h \
+    grammarloader\grammarloaderprivate.h \
+    grammarloader\grammarnativeloader.h \
+    grammarloader\grammarjsonloader.h
 
 RESOURCES += \
     list.qrc

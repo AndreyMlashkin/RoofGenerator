@@ -1,14 +1,13 @@
 #include <QDebug>
 
 #include "grammargenerator.h"
-#include "grammarjsonloader.h"
-#include "grammarnativeloader.h"
+#include "grammarloader/grammarjsonloader.h"
+#include "grammarloader/grammarnativeloader.h"
 #include "rule.h"
 
 GrammarGenerator::GrammarGenerator()
     : m_loader(NULL)
-{
-}
+{}
 
 GrammarGenerator::~GrammarGenerator()
 {
