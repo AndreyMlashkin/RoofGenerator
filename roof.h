@@ -17,6 +17,7 @@ class roof : public QWidget
 
 public:
     explicit roof(QWidget *parent = 0);
+    void paintRoof(QString roofBase);
     ~roof();
 
 private:

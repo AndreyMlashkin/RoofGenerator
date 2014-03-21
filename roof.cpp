@@ -17,8 +17,12 @@ roof::roof(QWidget *parent) :
     ui->graphicsView->setSceneRect(0,0, 300, 450);
     scene->setSceneRect(0,0,300,450);
 
-    painter->paint("/--/-\\/\\-|/|\\/|-\\|-\\", scene);
     ui->graphicsView->scale(0.8,0.8);
+}
+
+void roof::paintRoof(QString roofBase)
+{
+    painter->paint(roofBase, scene);
 }
 
 roof::~roof()

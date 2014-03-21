@@ -35,9 +35,9 @@ void FlowPainter::paint(QString rawString, QGraphicsScene *scene)
             prev = blockList[block];
         else{
             if((prev->getLevelChange() == -1 && blockList[block]->getLevelChange() == 0) ||
-                (prev->getLevelChange() == 0 && blockList[block]->getLevelChange() == 1))
-                y = y;
-            else if(prev->getLevelChange() == 0 && blockList[block]->getLevelChange() == -1)
+                (prev->getLevelChange() == 0 && blockList[block]->getLevelChange() == 1)){
+
+            }else if(prev->getLevelChange() == 0 && blockList[block]->getLevelChange() == -1)
                 y +=blockList[block]->getHeight();
             else{
                 realLevel = border(prev->getLevelChange() + blockList[block]->getLevelChange());
@@ -48,7 +48,6 @@ void FlowPainter::paint(QString rawString, QGraphicsScene *scene)
 
         item->setPos(x, y);
         x += blockList[block]->getWidth();
-        qDebug()<<block<<y;
 
         i++;
     }

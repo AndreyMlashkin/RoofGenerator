@@ -38,7 +38,7 @@ int BasePainter::loadBlocks(QString blockFile)
     }
     return true;
 }
-//Вылетает!
+
 BasePainter::~BasePainter(){
     qDeleteAll( blockList );
     blockList.clear();

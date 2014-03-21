@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     roof *r = new roof;
     r->show();
+    r->paintRoof("/\\");
 /*    GrammarGenerator g;
     //g.readGrammar("rules.txt");
 
