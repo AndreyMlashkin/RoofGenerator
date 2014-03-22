@@ -1,5 +1,4 @@
 #ifndef GRAMMARGENERATOR_H
-
 #define GRAMMARGENERATOR_H
 
 #include <QString>
@@ -20,8 +19,8 @@ public:
     void generate(int _depth);  // Adds to previous generated words. Use clear() before.
     void clear();
 
-    QString getWord(int _num) const;
-    int wordCount() const;
+    QString getWord(int _num, int _level = -1) const;
+    int wordCount(int _level = -1) const;
 
     bool isValid() const;
 
@@ -31,10 +30,14 @@ private:
 
     void separateTemAndUnterm(const QVector<Word>& _common, QSet<Word>& _terminal, QSet<Word>& _unterminal);
 
-private:
-    QVector <QSet<Word> > m_unterminalWords; // by levels.
-    QSet <QString> m_terminalWords;
+    void clusterTermWords() const;
 
+private:
+    QVector <QSet<Word> > m_unterminalWords; // By levels.
+    QVector <QSet<Word> > m_terminalWords;
+
+    mutable bool m_clusterTermWordsUpdated;
+    mutable QSet<Word> m_clusterTermWords;
 
     GrammarLoader* m_loader;
 };

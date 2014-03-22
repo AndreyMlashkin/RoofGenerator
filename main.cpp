@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
     qDebug() << g.isValid();
 
     g.generate(5);
+    qDebug() << g.wordCount();
 
     for(int i = 0; i < g.wordCount(); i++)
     {
@@ -31,7 +32,5 @@ int main(int argc, char *argv[])
         r->show();
         r->paintRoof(generated);
     }
-  //  r->paintRoof(g.getWord(10));
-
     return a.exec();
 }

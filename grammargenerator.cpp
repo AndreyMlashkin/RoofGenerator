@@ -6,7 +6,8 @@
 #include "rule.h"
 
 GrammarGenerator::GrammarGenerator()
-    : m_loader(NULL)
+    : m_loader(NULL),
+      m_clusterTermWordsUpdated(false)
 {}
 
 GrammarGenerator::~GrammarGenerator()
@@ -40,7 +41,11 @@ void GrammarGenerator::generate(int _depth)
 {     
     if(!m_loader)
         return;
+
     m_unterminalWords.resize(_depth + 1);
+    m_terminalWords.resize(_depth + 1);
+    m_clusterTermWordsUpdated = false;
+
     foreach(QString s, m_loader->startWords())
         m_unterminalWords[0] << s;
 
@@ -51,7 +56,7 @@ void GrammarGenerator::generate(int _depth)
             foreach(Rule* rule, m_loader->rules())
             {
                QVector<Word> generated = rule->apply(s);
-               separateTemAndUnterm(generated, m_terminalWords, m_unterminalWords[i+1]);
+               separateTemAndUnterm(generated, m_terminalWords[i+1], m_unterminalWords[i+1]);
             }
         }
     }
@@ -61,17 +66,30 @@ void GrammarGenerator::clear()
 {
     m_terminalWords.clear();
     m_unterminalWords.clear();
+
+    m_clusterTermWords.clear();
 }
 
-QString GrammarGenerator::getWord(int _num) const
+QString GrammarGenerator::getWord(int _num, int _level) const
 {
-    return m_terminalWords.toList()[_num];
+    if(_level == -1)
+    {
+        if(!m_clusterTermWordsUpdated)
+            clusterTermWords();
+        return m_clusterTermWords.values()[_num];
+    }
 
+    return m_terminalWords[_level].values()[_num];
 }
 
-int GrammarGenerator::wordCount() const
+int GrammarGenerator::wordCount(int _level) const
 {
-    return m_terminalWords.count();
+    if(_level != -1)
+        return m_terminalWords[_level].size();
+
+    if(!m_clusterTermWordsUpdated)
+        clusterTermWords();
+    return m_clusterTermWords.size();
 }
 
 bool GrammarGenerator::isValid() const
@@ -110,4 +128,11 @@ void GrammarGenerator::separateTemAndUnterm(const QVector<Word>& _common, QSet<W
         if(isTerminal)
             _terminal << w;
     }
+}
+
+void GrammarGenerator::clusterTermWords() const
+{
+    m_clusterTermWords.clear();
+    foreach(QSet<Word> set, m_terminalWords)
+        m_clusterTermWords.unite(set);
 }
