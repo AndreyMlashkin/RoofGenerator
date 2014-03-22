@@ -1,8 +1,11 @@
 #ifndef GRAMMARGENERATOR_H
+
 #define GRAMMARGENERATOR_H
 
 #include <QString>
 #include <QVector>
+#include <QSet>
+
 #include "generatorapi.h"
 
 class GrammarLoader;
@@ -14,10 +17,11 @@ public:
     ~GrammarGenerator();
 
     void readGrammar(const QString& _filename);
-    void generate(int _depth);
+    void generate(int _depth);  // Adds to previous generated words. Use clear() before.
+    void clear();
 
-    QString getWord(int _num, int _depth = -1) const; // -1 means doesnot matter.
-    int wordCount(int _depth = -1) const;
+    QString getWord(int _num) const;
+    int wordCount() const;
 
     bool isValid() const;
 
@@ -25,8 +29,12 @@ private:
     enum LoaderType {Json, Native};
     GrammarLoader* getLoader(LoaderType _type);
 
+    void separateTemAndUnterm(const QVector<Word>& _common, QSet<Word>& _terminal, QSet<Word>& _unterminal);
+
 private:
-    QVector <QVector<Word> > m_generatedWords; // by levels.
+    QVector <QSet<Word> > m_unterminalWords; // by levels.
+    QSet <QString> m_terminalWords;
+
 
     GrammarLoader* m_loader;
 };

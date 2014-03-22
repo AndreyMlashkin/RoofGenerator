@@ -17,7 +17,7 @@ int border(int level){
 
 void FlowPainter::paint(QString rawString, QGraphicsScene *scene)
 {
-    int x = -300, y = 300;
+    int x = -150, y = 300;
 
     int i = 0, length = rawString.length(), realLevel = 0;
     ElementaryBlock *prev = NULL;
@@ -30,6 +30,8 @@ void FlowPainter::paint(QString rawString, QGraphicsScene *scene)
                 i++;
             }
         }
+        if(!blockList.contains(block))
+            continue;
         QGraphicsPixmapItem* item = scene->addPixmap(*(blockList[block]->getImage()));
         if(prev == NULL)
             prev = blockList[block];

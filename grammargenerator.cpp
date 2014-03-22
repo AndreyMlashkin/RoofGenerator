@@ -37,53 +37,41 @@ void GrammarGenerator::readGrammar(const QString& _filename)
 }
 
 void GrammarGenerator::generate(int _depth)
-{ 
+{     
     if(!m_loader)
         return;
-    m_generatedWords.resize(_depth + 1);
+    m_unterminalWords.resize(_depth + 1);
     foreach(QString s, m_loader->startWords())
-        m_generatedWords[0] << s;
+        m_unterminalWords[0] << s;
 
     for(int i = 0; i < _depth; i++)
     {
-        foreach(QString s, m_generatedWords[i])
+        foreach(QString s, m_unterminalWords[i])
         {
             foreach(Rule* rule, m_loader->rules())
             {
                QVector<Word> generated = rule->apply(s);
-               m_generatedWords[i+1] += generated;
+               separateTemAndUnterm(generated, m_terminalWords, m_unterminalWords[i+1]);
             }
         }
     }
 }
 
-QString GrammarGenerator::getWord(int _num, int _depth) const
+void GrammarGenerator::clear()
 {
-    if(_depth == -1)
-    {
-        int i = 0;
-        while((_num -= m_generatedWords[i].count()) >= 0)
-            i++;
-
-        _num += m_generatedWords[i].count();
-        return m_generatedWords[i][_num];
-    }
-    else
-        return m_generatedWords[_depth][_num];
+    m_terminalWords.clear();
+    m_unterminalWords.clear();
 }
 
-int GrammarGenerator::wordCount(int _depth) const
+QString GrammarGenerator::getWord(int _num) const
 {
-    if(_depth == -1)
-    {
-        int count = 0;
-        for(int i = 0; i < m_generatedWords.count(); i++)
-            count += m_generatedWords[i].count();
-        return count;
-    }
-    else
-        return m_generatedWords[_depth].count();
+    return m_terminalWords.toList()[_num];
 
+}
+
+int GrammarGenerator::wordCount() const
+{
+    return m_terminalWords.count();
 }
 
 bool GrammarGenerator::isValid() const
@@ -103,4 +91,23 @@ GrammarLoader *GrammarGenerator::getLoader(GrammarGenerator::LoaderType _type)
         return new GrammarNativeLoader();
     else
         return NULL;
+}
+
+void GrammarGenerator::separateTemAndUnterm(const QVector<Word>& _common, QSet<Word>& _terminal, QSet<Word>& _unterminal)
+{
+    foreach(Word w, _common)
+    {
+        bool isTerminal = true;
+        foreach(QString s, m_loader->unterminalSymbols())
+        {
+            if(w.contains(s))
+            {
+                _unterminal << w;
+                isTerminal = false;
+                break;
+            }
+        }
+        if(isTerminal)
+            _terminal << w;
+    }
 }
