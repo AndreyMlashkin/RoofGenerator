@@ -10,9 +10,6 @@ int main(int argc, char *argv[])
     roof *r = new roof;
     r->show();
 
-
-//    r->paintRoof("-/\");
-//    return a.exec();
     GrammarGenerator g;
     g.readGrammar("rules.txt");
 
