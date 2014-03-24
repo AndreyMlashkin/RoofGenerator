@@ -11,11 +11,13 @@ int main(int argc, char *argv[])
     r->show();
 
     GrammarGenerator g;
-    g.readGrammar("rules.txt");
+//    g.readGrammar("rules.txt");
 
-//    g.readGrammar("://data/rules.json");
+    g.readGrammar("://data/rules.json");
     qDebug() << g.isValid();
 
+    g.generate(5);
+    g.generate(5);
     g.generate(5);
     qDebug() << g.wordCount();
 

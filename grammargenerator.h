@@ -16,7 +16,7 @@ public:
     ~GrammarGenerator();
 
     void readGrammar(const QString& _filename);
-    void generate(int _depth);  // Adds to previous generated words. Use clear() before.
+    void generate(int _depth);
     void clear();
 
     QString getWord(int _num, int _level = -1) const;
@@ -30,14 +30,16 @@ private:
 
     void separateTemAndUnterm(const QVector<Word>& _common, QSet<Word>& _terminal, QSet<Word>& _unterminal);
 
-    void clusterTermWords() const;
+    void updateCache() const;
 
 private:
     QVector <QSet<Word> > m_unterminalWords; // By levels.
     QVector <QSet<Word> > m_terminalWords;
 
-    mutable bool m_clusterTermWordsUpdated;
-    mutable QSet<Word> m_clusterTermWords;
+    int m_currentUpdateVer;
+
+    mutable int m_cacheVer;
+    mutable QStringList m_cachedWords;
 
     GrammarLoader* m_loader;
 };

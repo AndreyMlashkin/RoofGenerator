@@ -7,7 +7,8 @@
 
 GrammarGenerator::GrammarGenerator()
     : m_loader(NULL),
-      m_clusterTermWordsUpdated(false)
+      m_currentUpdateVer(0),
+      m_cacheVer(-1)
 {}
 
 GrammarGenerator::~GrammarGenerator()
@@ -39,12 +40,13 @@ void GrammarGenerator::readGrammar(const QString& _filename)
 
 void GrammarGenerator::generate(int _depth)
 {     
+    ++m_currentUpdateVer;
+    clear();
     if(!m_loader)
         return;
 
     m_unterminalWords.resize(_depth + 1);
     m_terminalWords.resize(_depth + 1);
-    m_clusterTermWordsUpdated = false;
 
     foreach(QString s, m_loader->startWords())
         m_unterminalWords[0] << s;
@@ -66,17 +68,15 @@ void GrammarGenerator::clear()
 {
     m_terminalWords.clear();
     m_unterminalWords.clear();
-
-    m_clusterTermWords.clear();
 }
 
 QString GrammarGenerator::getWord(int _num, int _level) const
 {
     if(_level == -1)
     {
-        if(!m_clusterTermWordsUpdated)
-            clusterTermWords();
-        return m_clusterTermWords.values()[_num];
+        if(m_currentUpdateVer != m_cacheVer)
+            updateCache();
+        return m_cachedWords[_num];
     }
 
     return m_terminalWords[_level].values()[_num];
@@ -87,9 +87,9 @@ int GrammarGenerator::wordCount(int _level) const
     if(_level != -1)
         return m_terminalWords[_level].size();
 
-    if(!m_clusterTermWordsUpdated)
-        clusterTermWords();
-    return m_clusterTermWords.size();
+    if(m_currentUpdateVer != m_cacheVer)
+        updateCache();
+    return m_cachedWords.size();
 }
 
 bool GrammarGenerator::isValid() const
@@ -130,9 +130,15 @@ void GrammarGenerator::separateTemAndUnterm(const QVector<Word>& _common, QSet<W
     }
 }
 
-void GrammarGenerator::clusterTermWords() const
+void GrammarGenerator::updateCache() const
 {
-    m_clusterTermWords.clear();
+    QSet<Word> cluster;
     foreach(QSet<Word> set, m_terminalWords)
-        m_clusterTermWords.unite(set);
+        cluster.unite(set);
+
+    m_cachedWords.clear();
+    foreach(Word w, cluster)
+        m_cachedWords << w;
+
+    m_cacheVer = m_currentUpdateVer;
 }
