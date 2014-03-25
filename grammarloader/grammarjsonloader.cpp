@@ -6,7 +6,7 @@
 
 #include "grammarjsonloader.h"
 #include "grammarloaderprivate.h"
-#include "rule.h"
+#include "../rule.h"
 
 GrammarJsonLoader::GrammarJsonLoader()
     : GrammarLoader()

@@ -1,6 +1,6 @@
 #include "grammarloader.h"
 
-#include "generatorapi.h"
+#include "../generatorapi.h"
 #include "grammarloaderprivate.h"
 
 GrammarLoader::GrammarLoader()

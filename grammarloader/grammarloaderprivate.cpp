@@ -1,5 +1,5 @@
 #include "grammarloaderprivate.h"
-#include "rule.h"
+#include "../rule.h"
 
 GrammarLoaderPrivate::GrammarLoaderPrivate()
     : isValid(false)

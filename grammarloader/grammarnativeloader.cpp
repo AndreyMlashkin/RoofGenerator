@@ -5,7 +5,7 @@
 
 #include "grammarnativeloader.h"
 #include "grammarloaderprivate.h"
-#include "rule.h"
+#include "../rule.h"
 
 const QChar commentator = '#';
 
