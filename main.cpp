@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     {
         QString generated = g.getWord(i);
         qDebug() << generated;
-        if(generated.isEmpty() || generated.contains("||"))
+        if(generated.isEmpty())
             continue;
         roof *r = new roof;
         r->show();
