@@ -12,7 +12,14 @@ GrammarJsonLoader::GrammarJsonLoader()
     : GrammarLoader()
 {}
 
-void GrammarJsonLoader::parceGrammar(const QString &_filename)
+GrammarLoader* GrammarJsonLoader::clone()
+{
+    GrammarJsonLoader* thisClone = new GrammarJsonLoader();
+    thisClone = this;
+    return thisClone;
+}
+
+void GrammarJsonLoader::parceGrammar(const QString& _filename)
 {
     QFile jsonFile(_filename);
     if (!jsonFile.open(QIODevice::ReadOnly))

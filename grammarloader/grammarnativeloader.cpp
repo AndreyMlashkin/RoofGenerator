@@ -13,6 +13,13 @@ GrammarNativeLoader::GrammarNativeLoader()
     : GrammarLoader()
 {}
 
+GrammarLoader *GrammarNativeLoader::clone()
+{
+    GrammarNativeLoader* thisClone = new GrammarNativeLoader();
+    thisClone = this;
+    return thisClone;
+}
+
 void inline deleteComments(QString& _str)
 {
     _str.remove(QRegExp("#.*$"));

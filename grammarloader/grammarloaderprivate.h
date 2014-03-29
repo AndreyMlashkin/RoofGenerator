@@ -7,10 +7,10 @@ class Rule;
 
 class GrammarLoaderPrivate
 {
-private:
-    Q_DISABLE_COPY(GrammarLoaderPrivate)
 public:
     GrammarLoaderPrivate();
+    GrammarLoaderPrivate(const GrammarLoaderPrivate& _loader);
+
     ~GrammarLoaderPrivate();
 
     QStringList unterminalSymbols;

@@ -12,6 +12,7 @@ class GrammarLoader
 public:
     GrammarLoader();
     virtual ~GrammarLoader();
+    virtual GrammarLoader* clone() = 0;
 
     virtual void parceGrammar(const QString&) = 0;
 
@@ -24,6 +25,10 @@ public:
 
 protected:
     GrammarLoaderPrivate* p;
+
+private:
+    GrammarLoader(const GrammarLoader&);
+    virtual GrammarLoader& operator =(const GrammarLoader& _loader);
 };
 
 #endif // GrammarLoader_H

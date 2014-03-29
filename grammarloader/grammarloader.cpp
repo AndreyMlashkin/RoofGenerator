@@ -7,6 +7,12 @@ GrammarLoader::GrammarLoader()
     : p(new GrammarLoaderPrivate())
 {}
 
+GrammarLoader& GrammarLoader::operator =(const GrammarLoader& _loader)
+{
+    p = new GrammarLoaderPrivate(*_loader.p);
+    return *this;
+}
+
 GrammarLoader::~GrammarLoader()
 {
     delete p;

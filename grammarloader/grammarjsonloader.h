@@ -9,6 +9,8 @@ class GrammarJsonLoader : public GrammarLoader
 {
 public:
     GrammarJsonLoader();
+    GrammarLoader* clone();
+
     void parceGrammar(const QString& _filename);
 };
 
