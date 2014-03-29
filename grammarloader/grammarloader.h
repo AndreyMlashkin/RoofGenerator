@@ -5,7 +5,7 @@
 #include <QVector>
 
 class Rule;
-struct GrammarLoaderPrivate;
+class GrammarLoaderPrivate;
 
 class GrammarLoader
 {

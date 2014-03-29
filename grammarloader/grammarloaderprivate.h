@@ -5,8 +5,11 @@
 #include <QStringList>
 class Rule;
 
-struct GrammarLoaderPrivate
+class GrammarLoaderPrivate
 {
+private:
+    Q_DISABLE_COPY(GrammarLoaderPrivate)
+public:
     GrammarLoaderPrivate();
     ~GrammarLoaderPrivate();
 

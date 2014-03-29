@@ -7,6 +7,8 @@
 
 #include "generatorapi.h"
 
+#include "wordsiterator.h"
+
 class GrammarLoader;
 
 class GrammarGenerator
@@ -16,30 +18,36 @@ public:
     ~GrammarGenerator();
 
     void readGrammar(const QString& _filename);
-    void generate(int _depth);
-    void clear();
-
-    QString getWord(int _num, int _level = -1) const;
-    int wordCount(int _level = -1) const;
-
+    void beginGenerate(int _level);
     bool isValid() const;
 
+    void reset();
+    bool isNextWord();
+    Word nextWord();
+
 private:
+    void generate(int _level, const Word& _word);
+
     enum LoaderType {Json, Native};
     GrammarLoader* getLoader(LoaderType _type);
 
     void separateTemAndUnterm(const QVector<Word>& _common, QSet<Word>& _terminal, QSet<Word>& _unterminal);
 
-    void updateCache() const;
+    bool isTerminal(const Word& _word);
+
+
+//    void updateCache() const;
 
 private:
+    int m_maxLevel;
+
     QVector <QSet<Word> > m_unterminalWords; // By levels.
     QVector <QSet<Word> > m_terminalWords;
 
-    int m_currentUpdateVer;
+    int m_currentWordNum;
 
-    mutable int m_cacheVer;
-    mutable QStringList m_cachedWords;
+//    mutable int m_cacheVer;
+//    mutable QStringList m_cachedWords;
 
     GrammarLoader* m_loader;
 };

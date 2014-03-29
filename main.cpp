@@ -9,25 +9,24 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     GrammarGenerator g;
-//    g.readGrammar("rules.txt");
+   // g.readGrammar("rules.txt");
 
     g.readGrammar("://data/rules.json");
     qDebug() << g.isValid();
 
-    g.generate(5);
-    g.generate(5);
-    g.generate(5);
-    qDebug() << g.wordCount();
-
-    for(int i = 0; i < g.wordCount(); i++)
+    int i = 0;
+    g.beginGenerate(6);
+    while(g.isNextWord())
     {
-        QString generated = g.getWord(i);
+        i++;
+        QString generated = g.nextWord();// getWord(i);
         qDebug() << generated;
         if(generated.isEmpty())
             continue;
-        roof *r = new roof;
-        r->show();
-        r->paintRoof(generated);
+//        roof *r = new roof;
+//        r->show();
+//        r->paintRoof(generated);
     }
+    qDebug() << i;
     return a.exec();
 }

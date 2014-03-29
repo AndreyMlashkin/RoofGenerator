@@ -7,8 +7,7 @@
 
 GrammarGenerator::GrammarGenerator()
     : m_loader(NULL),
-      m_currentUpdateVer(0),
-      m_cacheVer(-1)
+      m_currentWordNum(0)
 {}
 
 GrammarGenerator::~GrammarGenerator()
@@ -38,7 +37,16 @@ void GrammarGenerator::readGrammar(const QString& _filename)
         m_loader->parceGrammar(_filename);
 }
 
-void GrammarGenerator::generate(int _depth)
+void GrammarGenerator::beginGenerate(int _level)
+{
+    m_maxLevel = _level;
+    m_unterminalWords.resize(_level + 1);
+    m_terminalWords.resize  (_level + 1);
+    foreach (Word w, m_loader->startWords())
+        generate(0, w);
+}
+
+/*void GrammarGenerator::generateAll(int _depth)
 {     
     ++m_currentUpdateVer;
     clear();
@@ -63,33 +71,29 @@ void GrammarGenerator::generate(int _depth)
         }
     }
 }
+*/
 
-void GrammarGenerator::clear()
+void GrammarGenerator::generate(int _level, const Word& _word)
 {
-    m_terminalWords.clear();
-    m_unterminalWords.clear();
-}
-
-QString GrammarGenerator::getWord(int _num, int _level) const
-{
-    if(_level == -1)
+    bool isTerm = isTerminal(_word);
+    if(isTerm)
     {
-        if(m_currentUpdateVer != m_cacheVer)
-            updateCache();
-        return m_cachedWords[_num];
+        m_terminalWords[_level] << _word;
+        return;
     }
+    else
+        m_unterminalWords[_level] << _word;
 
-    return m_terminalWords[_level].values()[_num];
-}
 
-int GrammarGenerator::wordCount(int _level) const
-{
-    if(_level != -1)
-        return m_terminalWords[_level].size();
+    if(_level == m_maxLevel)
+        return;
 
-    if(m_currentUpdateVer != m_cacheVer)
-        updateCache();
-    return m_cachedWords.size();
+    foreach(Rule* rule, m_loader->rules())
+    {
+       QVector<Word> generated = rule->apply(_word);
+       foreach (Word w, generated)
+            generate(_level+1, w);
+    }
 }
 
 bool GrammarGenerator::isValid() const
@@ -99,6 +103,22 @@ bool GrammarGenerator::isValid() const
             return true;
 
     return false;
+}
+
+void GrammarGenerator::reset()
+{
+    m_currentWordNum = 0;
+}
+
+bool GrammarGenerator::isNextWord()
+{
+    return m_currentWordNum < m_terminalWords[m_maxLevel].size();
+}
+
+Word GrammarGenerator::nextWord()
+{
+    m_currentWordNum++;
+    return m_terminalWords[m_maxLevel].toList()[m_currentWordNum-1];
 }
 
 GrammarLoader *GrammarGenerator::getLoader(GrammarGenerator::LoaderType _type)
@@ -130,6 +150,20 @@ void GrammarGenerator::separateTemAndUnterm(const QVector<Word>& _common, QSet<W
     }
 }
 
+bool GrammarGenerator::isTerminal(const Word& _word)
+{
+    bool isTerminal = true;
+    foreach(QString s, m_loader->unterminalSymbols())
+    {
+        if(_word.contains(s))
+        {
+            isTerminal = false;
+            break;
+        }
+    }
+    return isTerminal;
+}
+/*
 void GrammarGenerator::updateCache() const
 {
     QSet<Word> cluster;
@@ -140,5 +174,6 @@ void GrammarGenerator::updateCache() const
     foreach(Word w, cluster)
         m_cachedWords << w;
 
-    m_cacheVer = m_currentUpdateVer;
+    m_cacheVer = m_currentWordNum;
 }
+*/
