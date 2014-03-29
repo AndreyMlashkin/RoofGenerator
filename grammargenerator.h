@@ -7,8 +7,6 @@
 
 #include "generatorapi.h"
 
-#include "wordsiterator.h"
-
 class GrammarLoader;
 
 class GrammarGenerator

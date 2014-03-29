@@ -22,7 +22,7 @@ QStringList GrammarLoader::terminalSymbols() const
     return p->terminalSymbols;
 }
 
-QVector<Rule *> GrammarLoader::rules() const
+const QVector<Rule *> GrammarLoader::rules() const
 {
     return p->rules;
 }

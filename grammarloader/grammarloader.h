@@ -17,7 +17,7 @@ public:
 
     QStringList unterminalSymbols() const;
     QStringList terminalSymbols() const;
-    QVector <Rule*> rules() const;
+    const QVector <Rule*> rules() const;
     QStringList startWords() const;
 
     bool isValid() const;

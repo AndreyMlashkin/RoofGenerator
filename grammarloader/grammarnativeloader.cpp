@@ -10,11 +10,7 @@
 const QChar commentator = '#';
 
 GrammarNativeLoader::GrammarNativeLoader()
-    : GrammarLoader(),
-      m_untermParsed(false),
-      m_rulesParsed(false),
-      m_terminalParsed(false),
-      m_startWordParsed(false)
+    : GrammarLoader()
 {}
 
 void inline deleteComments(QString& _str)
@@ -57,7 +53,8 @@ inline QVector <Rule*> parseRules(QString _line, QTextStream& _in)
 
 void GrammarNativeLoader::parceGrammar(const QString& _filename)
 {
-    m_untermParsed = m_rulesParsed = m_terminalParsed = m_startWordParsed = false;
+    bool untermParsed, rulesParsed, terminalParsed, startWordParsed;
+    untermParsed = rulesParsed = terminalParsed = startWordParsed = false;
 
     QFile data(_filename);
     if (data.open(QFile::ReadOnly))
@@ -69,38 +66,38 @@ void GrammarNativeLoader::parceGrammar(const QString& _filename)
             line = in.readLine();
             deleteComments(line);
 
-            if(!m_untermParsed)
+            if(!untermParsed)
             {
                 p->unterminalSymbols = parceLine(line, "N");
                 if(!p->unterminalSymbols.isEmpty())
                 {
-                    m_untermParsed = true;
+                    untermParsed = true;
                     continue;
                 }
             }
-            else if(!m_terminalParsed)
+            else if(!terminalParsed)
             {
                 p->terminalSymbols = parceLine(line, "T");
                 if(!p->unterminalSymbols.isEmpty())
                 {
-                    m_terminalParsed = true;
+                    terminalParsed = true;
                     continue;
                 }
             }
-            else if(!m_startWordParsed)
+            else if(!startWordParsed)
             {
                 p->startWords = parceLine(line, "S");
                 if(!p->startWords.isEmpty())
                 {
-                    m_startWordParsed = true;
+                    startWordParsed = true;
                     continue;
                 }
             }
-            else if(!m_rulesParsed)
+            else if(!rulesParsed)
             {
                 p->rules = parseRules(line, in);
                 if(!p->rules.isEmpty())
-                    m_rulesParsed = true;
+                    rulesParsed = true;
             }
         }
         while (!line.isNull());
@@ -108,5 +105,5 @@ void GrammarNativeLoader::parceGrammar(const QString& _filename)
     else
         qDebug() << "No grammar file! " << _filename << "in " << Q_FUNC_INFO;
 
-    p->isValid = m_untermParsed && m_rulesParsed && m_terminalParsed && m_startWordParsed;
+    p->isValid = untermParsed && rulesParsed && terminalParsed && startWordParsed;
 }

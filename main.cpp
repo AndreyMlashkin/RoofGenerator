@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     while(g.isNextWord())
     {
         i++;
-        QString generated = g.nextWord();// getWord(i);
+        QString generated = g.nextWord();
         qDebug() << generated;
         if(generated.isEmpty())
             continue;

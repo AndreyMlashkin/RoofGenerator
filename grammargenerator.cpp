@@ -29,7 +29,7 @@ void GrammarGenerator::readGrammar(const QString& _filename)
     }
     catch(...)
     {
-        qDebug() << "error opening file";
+        qDebug() << "Error opening file.";
     }
     delete m_loader;
     m_loader = getLoader(type);
