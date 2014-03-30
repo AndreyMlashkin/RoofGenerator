@@ -12,7 +12,6 @@ public:
     GrammarLoader* clone();
 
     void parceGrammar(const QString& _filename);
-
 };
 
 #endif // RULESREADER_H

@@ -14,19 +14,16 @@ int main(int argc, char *argv[])
     g.readGrammar("://data/rules.json");
     qDebug() << g.isValid();
 
-    int i = 0;
-    g.beginGenerate(6);
+    g.beginGenerate(5);
     while(g.isNextWord())
     {
-        i++;
         QString generated = g.nextWord();
         qDebug() << generated;
         if(generated.isEmpty())
             continue;
-//        roof *r = new roof;
-//        r->show();
-//        r->paintRoof(generated);
+        roof *r = new roof;
+        r->show();
+        r->paintRoof(generated);
     }
-    qDebug() << i;
     return a.exec();
 }

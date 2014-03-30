@@ -1,6 +1,7 @@
 #ifndef GRAMMARGENERATOR_H
 #define GRAMMARGENERATOR_H
 
+#include <QObject>
 #include <QString>
 #include <QVector>
 #include <QSet>
@@ -8,9 +9,11 @@
 #include "generatorapi.h"
 
 class GrammarLoader;
+class WordsGenerator;
 
-class GrammarGenerator
+class GrammarGenerator : public QObject
 {
+    Q_OBJECT
 public:
     GrammarGenerator();
     ~GrammarGenerator();
@@ -23,18 +26,20 @@ public:
     bool isNextWord();
     Word nextWord();
 
+private slots:
+    void generatorFinished();
+
 private:
     void generate(int _level, const Word& _word);
 
     enum LoaderType {Json, Native};
     GrammarLoader* getLoader(LoaderType _type);
 
+    void merge(QVector <QSet<Word> > _words);
+
     void separateTemAndUnterm(const QVector<Word>& _common, QSet<Word>& _terminal, QSet<Word>& _unterminal);
 
     bool isTerminal(const Word& _word);
-
-
-//    void updateCache() const;
 
 private:
     int m_maxLevel;
@@ -44,10 +49,8 @@ private:
 
     int m_currentWordNum;
 
-//    mutable int m_cacheVer;
-//    mutable QStringList m_cachedWords;
-
     GrammarLoader* m_loader;
+    WordsGenerator* m_generator;
 };
 
 #endif // GRAMMARGENERATOR_H

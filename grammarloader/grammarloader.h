@@ -16,10 +16,11 @@ public:
 
     virtual void parceGrammar(const QString&) = 0;
 
+    void setStartWords(const QStringList& _words);
+    QStringList startWords() const;
     QStringList unterminalSymbols() const;
     QStringList terminalSymbols() const;
     const QVector <Rule*> rules() const;
-    QStringList startWords() const;
 
     bool isValid() const;
 
@@ -28,7 +29,7 @@ protected:
 
 private:
     GrammarLoader(const GrammarLoader&);
-    virtual GrammarLoader& operator =(const GrammarLoader& _loader);
+    GrammarLoader& operator =(const GrammarLoader& _loader);
 };
 
 #endif // GrammarLoader_H

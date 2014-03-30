@@ -16,7 +16,8 @@ GrammarNativeLoader::GrammarNativeLoader()
 GrammarLoader *GrammarNativeLoader::clone()
 {
     GrammarNativeLoader* thisClone = new GrammarNativeLoader();
-    thisClone = this;
+    thisClone->p = new GrammarLoaderPrivate(*p);
+
     return thisClone;
 }
 

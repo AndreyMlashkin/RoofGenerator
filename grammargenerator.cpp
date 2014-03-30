@@ -4,10 +4,12 @@
 #include "grammarloader/grammarjsonloader.h"
 #include "grammarloader/grammarnativeloader.h"
 #include "rule.h"
+#include "wordsgenerator.h"
 
 GrammarGenerator::GrammarGenerator()
     : m_loader(NULL),
-      m_currentWordNum(0)
+      m_currentWordNum(0),
+      m_generator(NULL)
 {}
 
 GrammarGenerator::~GrammarGenerator()
@@ -39,39 +41,19 @@ void GrammarGenerator::readGrammar(const QString& _filename)
 
 void GrammarGenerator::beginGenerate(int _level)
 {
-    m_maxLevel = _level;
     m_unterminalWords.resize(_level + 1);
     m_terminalWords.resize  (_level + 1);
-    foreach (Word w, m_loader->startWords())
-        generate(0, w);
+    m_maxLevel = _level;
+
+
+    m_generator = new WordsGenerator(m_loader);
+
+    connect(m_generator, SIGNAL(finished()), this, SLOT(generatorFinished()));
+    m_generator->begin(_level);
+
+    delete m_generator;
+    m_generator = NULL;
 }
-
-/*void GrammarGenerator::generateAll(int _depth)
-{     
-    ++m_currentUpdateVer;
-    clear();
-    if(!m_loader)
-        return;
-
-    m_unterminalWords.resize(_depth + 1);
-    m_terminalWords.resize(_depth + 1);
-
-    foreach(QString s, m_loader->startWords())
-        m_unterminalWords[0] << s;
-
-    for(int i = 0; i < _depth; i++)
-    {
-        foreach(QString s, m_unterminalWords[i])
-        {
-            foreach(Rule* rule, m_loader->rules())
-            {
-               QVector<Word> generated = rule->apply(s);
-               separateTemAndUnterm(generated, m_terminalWords[i+1], m_unterminalWords[i+1]);
-            }
-        }
-    }
-}
-*/
 
 void GrammarGenerator::generate(int _level, const Word& _word)
 {
@@ -121,6 +103,13 @@ Word GrammarGenerator::nextWord()
     return m_terminalWords[m_maxLevel].toList()[m_currentWordNum-1];
 }
 
+void GrammarGenerator::generatorFinished()
+{
+    Q_ASSERT(m_generator);
+    merge(m_generator->terminalWords());
+    merge(m_generator->unterminalWords());
+}
+
 GrammarLoader *GrammarGenerator::getLoader(GrammarGenerator::LoaderType _type)
 {
     if(_type == Json)
@@ -129,6 +118,22 @@ GrammarLoader *GrammarGenerator::getLoader(GrammarGenerator::LoaderType _type)
         return new GrammarNativeLoader();
     else
         return NULL;
+}
+
+void GrammarGenerator::merge(QVector<QSet<Word> > _words)
+{
+    int lvl = 0;
+    foreach(QSet<Word> set, _words)
+    {
+        foreach(Word w, set)
+        {
+            if(isTerminal(w))
+                m_terminalWords[lvl] << w;
+            else
+                m_unterminalWords[lvl] << w;
+        }
+        ++lvl;
+    }
 }
 
 void GrammarGenerator::separateTemAndUnterm(const QVector<Word>& _common, QSet<Word>& _terminal, QSet<Word>& _unterminal)
@@ -163,17 +168,3 @@ bool GrammarGenerator::isTerminal(const Word& _word)
     }
     return isTerminal;
 }
-/*
-void GrammarGenerator::updateCache() const
-{
-    QSet<Word> cluster;
-    foreach(QSet<Word> set, m_terminalWords)
-        cluster.unite(set);
-
-    m_cachedWords.clear();
-    foreach(Word w, cluster)
-        m_cachedWords << w;
-
-    m_cacheVer = m_currentWordNum;
-}
-*/

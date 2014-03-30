@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     grammarloader\grammarloader.cpp \
     grammarloader\grammarloaderprivate.cpp \
     grammarloader\grammarnativeloader.cpp \
-    grammarloader\grammarjsonloader.cpp
+    grammarloader\grammarjsonloader.cpp \
+    wordsgenerator.cpp
 
 HEADERS += \
     generatorapi.h \
@@ -36,7 +37,8 @@ HEADERS += \
     grammarloader\grammarloader.h \
     grammarloader\grammarloaderprivate.h \
     grammarloader\grammarnativeloader.h \
-    grammarloader\grammarjsonloader.h
+    grammarloader\grammarjsonloader.h \
+    wordsgenerator.h
 
 RESOURCES += \
     list.qrc

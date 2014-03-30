@@ -15,7 +15,7 @@ GrammarJsonLoader::GrammarJsonLoader()
 GrammarLoader* GrammarJsonLoader::clone()
 {
     GrammarJsonLoader* thisClone = new GrammarJsonLoader();
-    thisClone = this;
+    thisClone->p = new GrammarLoaderPrivate(*p);
     return thisClone;
 }
 

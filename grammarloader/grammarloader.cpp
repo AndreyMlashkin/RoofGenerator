@@ -18,6 +18,11 @@ GrammarLoader::~GrammarLoader()
     delete p;
 }
 
+void GrammarLoader::setStartWords(const QStringList& _words)
+{
+    p->startWords = _words;
+}
+
 QStringList GrammarLoader::unterminalSymbols() const
 {
     return p->unterminalSymbols;
