@@ -55,29 +55,6 @@ void GrammarGenerator::beginGenerate(int _level)
     m_generator = NULL;
 }
 
-void GrammarGenerator::generate(int _level, const Word& _word)
-{
-    bool isTerm = isTerminal(_word);
-    if(isTerm)
-    {
-        m_terminalWords[_level] << _word;
-        return;
-    }
-    else
-        m_unterminalWords[_level] << _word;
-
-
-    if(_level == m_maxLevel)
-        return;
-
-    foreach(Rule* rule, m_loader->rules())
-    {
-       QVector<Word> generated = rule->apply(_word);
-       foreach (Word w, generated)
-            generate(_level+1, w);
-    }
-}
-
 bool GrammarGenerator::isValid() const
 {
     if(m_loader)
@@ -94,20 +71,19 @@ void GrammarGenerator::reset()
 
 bool GrammarGenerator::isNextWord()
 {
-    return m_currentWordNum < m_terminalWords[m_maxLevel].size();
+    return m_currentWordNum < m_terminalWords[m_maxLevel-1].size();
 }
 
 Word GrammarGenerator::nextWord()
 {
-    m_currentWordNum++;
-    return m_terminalWords[m_maxLevel].toList()[m_currentWordNum-1];
+    ++m_currentWordNum;
+    return m_terminalWords[m_maxLevel-1].toList()[m_currentWordNum-1];
 }
 
 void GrammarGenerator::generatorFinished()
 {
     Q_ASSERT(m_generator);
-    merge(m_generator->terminalWords());
-    merge(m_generator->unterminalWords());
+    merge(m_generator->generatedWords());
 }
 
 GrammarLoader *GrammarGenerator::getLoader(GrammarGenerator::LoaderType _type)
@@ -134,6 +110,18 @@ void GrammarGenerator::merge(QVector<QSet<Word> > _words)
         }
         ++lvl;
     }
+
+    QSet<Word> clusteredIncoming;
+    foreach(QSet<Word> set, _words)
+        clusteredIncoming += set;
+
+    QSet<Word> newWords = m_clasteredTerminalWords.subtract(clusteredIncoming);
+
+    foreach(Word w, newWords)
+        m_orderedClasteredTerminalWords << w;
+//    m_orderedClasteredTerminalWords  << newWords;
+
+    m_clasteredTerminalWords += clusteredIncoming;
 }
 
 void GrammarGenerator::separateTemAndUnterm(const QVector<Word>& _common, QSet<Word>& _terminal, QSet<Word>& _unterminal)

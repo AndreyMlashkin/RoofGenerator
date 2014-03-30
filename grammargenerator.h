@@ -30,8 +30,6 @@ private slots:
     void generatorFinished();
 
 private:
-    void generate(int _level, const Word& _word);
-
     enum LoaderType {Json, Native};
     GrammarLoader* getLoader(LoaderType _type);
 
@@ -43,11 +41,13 @@ private:
 
 private:
     int m_maxLevel;
+    int m_currentWordNum;
 
     QVector <QSet<Word> > m_unterminalWords; // By levels.
     QVector <QSet<Word> > m_terminalWords;
 
-    int m_currentWordNum;
+    QSet <Word> m_clasteredTerminalWords;
+    QVector <Word> m_orderedClasteredTerminalWords;
 
     GrammarLoader* m_loader;
     WordsGenerator* m_generator;
