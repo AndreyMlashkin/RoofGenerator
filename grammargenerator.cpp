@@ -71,13 +71,13 @@ void GrammarGenerator::reset()
 
 bool GrammarGenerator::isNextWord()
 {
-    return m_currentWordNum < m_terminalWords[m_maxLevel-1].size();
+    return m_currentWordNum < m_orderedClasteredTerminalWords.size();
 }
 
 Word GrammarGenerator::nextWord()
 {
     ++m_currentWordNum;
-    return m_terminalWords[m_maxLevel-1].toList()[m_currentWordNum-1];
+    return m_orderedClasteredTerminalWords[m_currentWordNum-1];
 }
 
 void GrammarGenerator::generatorFinished()
@@ -99,27 +99,26 @@ GrammarLoader *GrammarGenerator::getLoader(GrammarGenerator::LoaderType _type)
 void GrammarGenerator::merge(QVector<QSet<Word> > _words)
 {
     int lvl = 0;
+    QSet<Word> clusteredIncoming;
     foreach(QSet<Word> set, _words)
     {
         foreach(Word w, set)
         {
             if(isTerminal(w))
+            {
                 m_terminalWords[lvl] << w;
+                clusteredIncoming << w;
+            }
             else
                 m_unterminalWords[lvl] << w;
         }
         ++lvl;
     }
 
-    QSet<Word> clusteredIncoming;
-    foreach(QSet<Word> set, _words)
-        clusteredIncoming += set;
-
-    QSet<Word> newWords = m_clasteredTerminalWords.subtract(clusteredIncoming);
+    QSet<Word> newWords = clusteredIncoming.subtract(m_clasteredTerminalWords);//.subtract(clusteredIncoming);
 
     foreach(Word w, newWords)
         m_orderedClasteredTerminalWords << w;
-//    m_orderedClasteredTerminalWords  << newWords;
 
     m_clasteredTerminalWords += clusteredIncoming;
 }
