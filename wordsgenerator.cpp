@@ -4,11 +4,11 @@
 #include "grammarloader/grammarloader.h"
 #include "rule.h"
 
-WordsGenerator::WordsGenerator(GrammarLoader* _loader, QObject* _parent) :
-    QObject(_parent),
+WordsGenerator::WordsGenerator(GrammarLoader* _loader) :
+    QObject(),
     isFinished(false),
-    m_loader(_loader->clone()),
     m_maxLevel(-1),
+    m_loader(_loader->clone()),
     m_generatedWords()
 {}
 
@@ -38,16 +38,6 @@ const QVector<QSet<Word> > WordsGenerator::generatedWords() const
 
 void WordsGenerator::generate(int _level, const Word &_word)
 {
-//    bool isTerm = isTerminal(_word);
-//    if(isTerm)
-//    {
-//        m_terminalWords[_level] << _word;
-//        return;
-//    }
-//    else
-//        m_unterminalWords[_level] << _word;
-
-
     if(_level == m_maxLevel)
         return;
 

@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     qDebug() << g.isValid();
 
     g.beginGenerate(5);
+
     while(g.isNextWord())
     {
         QString generated = g.nextWord();

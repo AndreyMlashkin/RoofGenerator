@@ -7,8 +7,9 @@
 #include "wordsgenerator.h"
 
 GrammarGenerator::GrammarGenerator()
-    : m_loader(NULL),
+    : m_maxLevel(-1),
       m_currentWordNum(0),
+      m_loader(NULL),
       m_generator(NULL)
 {}
 
@@ -41,10 +42,11 @@ void GrammarGenerator::readGrammar(const QString& _filename)
 
 void GrammarGenerator::beginGenerate(int _level)
 {
+    reset();
+
     m_unterminalWords.resize(_level + 1);
     m_terminalWords.resize  (_level + 1);
     m_maxLevel = _level;
-
 
     m_generator = new WordsGenerator(m_loader);
 
@@ -67,6 +69,12 @@ bool GrammarGenerator::isValid() const
 void GrammarGenerator::reset()
 {
     m_currentWordNum = 0;
+    m_maxLevel = -1;
+    m_unterminalWords.clear();
+    m_terminalWords.clear();
+
+    m_clasteredTerminalWords.clear();
+    m_orderedClasteredTerminalWords.clear();
 }
 
 bool GrammarGenerator::isNextWord()
