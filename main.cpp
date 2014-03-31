@@ -14,8 +14,9 @@ int main(int argc, char *argv[])
     g.readGrammar("://data/rules.json");
     qDebug() << g.isValid();
 
-    g.beginGenerate(5);
+    g.beginGenerate(6);
 
+    int count = 0;
     while(g.isNextWord())
     {
         QString generated = g.nextWord();
@@ -25,6 +26,8 @@ int main(int argc, char *argv[])
         roof *r = new roof;
         r->show();
         r->paintRoof(generated);
+        ++count;
     }
+    qDebug() << count << " words generated";
     return a.exec();
 }

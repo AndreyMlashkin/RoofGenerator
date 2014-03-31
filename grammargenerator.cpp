@@ -48,13 +48,16 @@ void GrammarGenerator::beginGenerate(int _level)
     m_terminalWords.resize  (_level + 1);
     m_maxLevel = _level;
 
-    m_generator = new WordsGenerator(m_loader);
+    m_generator = new WordsGenerator(m_loader, m_mutex);
+    m_generator->moveToThread(&m_generationThread);
 
     connect(m_generator, SIGNAL(finished()), this, SLOT(generatorFinished()));
+  //  connect(m_generationThread, SIGNAL(finished()), m_generator, SLOT(deleteLater()));
+
     m_generator->begin(_level);
 
-    delete m_generator;
-    m_generator = NULL;
+//    delete m_generator;
+//    m_generator = NULL;
 }
 
 bool GrammarGenerator::isValid() const
@@ -79,6 +82,7 @@ void GrammarGenerator::reset()
 
 bool GrammarGenerator::isNextWord()
 {
+    QMutexLocker locker(&m_mutex);
     return m_currentWordNum < m_orderedClasteredTerminalWords.size();
 }
 
@@ -90,8 +94,13 @@ Word GrammarGenerator::nextWord()
 
 void GrammarGenerator::generatorFinished()
 {
-    Q_ASSERT(m_generator);
-    merge(m_generator->generatedWords());
+    WordsGenerator* finisher = dynamic_cast<WordsGenerator*>(sender());
+    Q_ASSERT(finisher);
+
+    merge(finisher->generatedWords());
+
+    m_generationThread.quit();
+    delete finisher;
 }
 
 GrammarLoader *GrammarGenerator::getLoader(GrammarGenerator::LoaderType _type)
@@ -106,6 +115,8 @@ GrammarLoader *GrammarGenerator::getLoader(GrammarGenerator::LoaderType _type)
 
 void GrammarGenerator::merge(QVector<QSet<Word> > _words)
 {
+    QMutexLocker locker(&m_mutex);
+
     int lvl = 0;
     QSet<Word> clusteredIncoming;
     foreach(QSet<Word> set, _words)

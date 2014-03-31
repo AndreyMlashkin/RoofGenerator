@@ -4,15 +4,17 @@
 #include <QObject>
 #include <QVector>
 #include <QSet>
+
 #include "generatorapi.h"
 
 class GrammarLoader;
+class QMutex;
 
 class WordsGenerator : public QObject
 {
     Q_OBJECT
 public:
-    explicit WordsGenerator(GrammarLoader* _loader);
+    explicit WordsGenerator(GrammarLoader* _loader, QMutex& _mutex);
     void begin(int _level);
     bool isValid() const;
 
@@ -29,6 +31,8 @@ private:
     int m_maxLevel;
     GrammarLoader* m_loader;
     QVector <QSet<Word> > m_generatedWords;
+
+    QMutex& m_mutex;
 };
 
 #endif // WORDSGENERATOR_H
