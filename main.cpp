@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    GrammarGenerator g;
+    GrammarPerformer g;
    // g.readGrammar("rules.txt");
 
     g.readGrammar("://data/rules.json");
