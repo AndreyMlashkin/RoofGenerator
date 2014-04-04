@@ -23,6 +23,15 @@ roof::roof(QWidget *parent) :
 void roof::paintRoof(QString roofBase)
 {
     painter->paint(roofBase, scene);
+
+    QImage image(scene->sceneRect().size().toSize(), QImage::Format_ARGB32);
+    scene->setSceneRect(scene->itemsBoundingRect());
+    QPainter painter(&image);
+    painter.setRenderHint(QPainter::Antialiasing);
+    scene->render(&painter);
+
+    QString fileName = QString("d:\\projects\\cpp\\testQML\\img\\")+QString::number(rand())+".png";
+    image.save(fileName);
 }
 
 roof::~roof()

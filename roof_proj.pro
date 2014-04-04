@@ -14,31 +14,31 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    grammargenerator.cpp \
-    rule.cpp \
+    grammarperformer\rule.cpp \
     basepainter.cpp \
     elementaryblock.cpp \
     flowpainter.cpp \
     roof.cpp \
-    grammarloader\grammarloader.cpp \
-    grammarloader\grammarloaderprivate.cpp \
-    grammarloader\grammarnativeloader.cpp \
-    grammarloader\grammarjsonloader.cpp \
-    wordsgenerator.cpp
+    grammarperformer\grammarloader\grammarloader.cpp \
+    grammarperformer\grammarloader\grammarloaderprivate.cpp \
+    grammarperformer\grammarloader\grammarnativeloader.cpp \
+    grammarperformer\grammarloader\grammarjsonloader.cpp \
+    grammarperformer\wordsgenerator.cpp \
+    grammarperformer\grammarperformer.cpp
 
 HEADERS += \
-    generatorapi.h \
-    grammargenerator.h \
+    grammarperformer\generatorapi.h \
     rule.h \
     basepainter.h \
     elementaryblock.h \
     flowpainter.h \
     roof.h \
-    grammarloader\grammarloader.h \
-    grammarloader\grammarloaderprivate.h \
-    grammarloader\grammarnativeloader.h \
-    grammarloader\grammarjsonloader.h \
-    wordsgenerator.h
+    grammarperformer\grammarloader\grammarloader.h \
+    grammarperformer\grammarloader\grammarloaderprivate.h \
+    grammarperformer\grammarloader\grammarnativeloader.h \
+    grammarperformer\grammarloader\grammarjsonloader.h \
+    grammarperformer\wordsgenerator.h \
+    grammarperformer\grammarperformer.h
 
 RESOURCES += \
     list.qrc

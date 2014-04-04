@@ -1,7 +1,7 @@
 #include <QDebug>
 #include <QApplication>
 
-#include "grammargenerator.h"
+#include "grammarperformer/grammarperformer.h"
 #include "roof.h"
 
 int main(int argc, char *argv[])

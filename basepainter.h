@@ -12,7 +12,7 @@ class BasePainter
 {
 public:
     BasePainter(){}
-    ~BasePainter();
+    virtual ~BasePainter();
 
     virtual void paint(QString rawString, QGraphicsScene* scene) = 0;
     int loadBlocks(QString blockFile);
