@@ -15,8 +15,14 @@ int border(int level){
     return 0;
 }
 
-void FlowPainter::paint(QString rawString, QGraphicsScene *scene)
+QGraphicsScene* FlowPainter::paint(QString rawString)
 {
+    qDebug()<<isLoad;
+    if(!isLoad)
+        return NULL;
+    QGraphicsScene* scene = new QGraphicsScene;
+//    scene->setSceneRect(0,0,300,450);
+
     int x = -150, y = 300;
 
     int i = 0, length = rawString.length(), realLevel = 0;
@@ -53,4 +59,19 @@ void FlowPainter::paint(QString rawString, QGraphicsScene *scene)
 
         i++;
     }
+    return scene;
+}
+
+QImage *FlowPainter::paintImage(QString rawString)
+{
+    QGraphicsScene* scene = paint(rawString);
+    if(scene == NULL)
+        return NULL;
+    QImage *image = new QImage(scene->sceneRect().size().toSize(), QImage::Format_ARGB32);
+    scene->setSceneRect(scene->itemsBoundingRect());
+    QPainter painter(image);
+    painter.setRenderHint(QPainter::Antialiasing);
+    scene->render(&painter);
+    delete scene;
+    return image;
 }

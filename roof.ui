@@ -17,7 +17,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item alignment="Qt::AlignLeft">
-      <widget class="QPushButton" name="prevButton">
+      <widget class="QPushButton" name="backButton">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -28,7 +28,7 @@
         </size>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string>Назад</string>
        </property>
       </widget>
      </item>
@@ -44,6 +44,16 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="loadButton">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="text">
+        <string>Загрузить грамматику</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

@@ -18,27 +18,33 @@ SOURCES += main.cpp \
     basepainter.cpp \
     elementaryblock.cpp \
     flowpainter.cpp \
-    roof.cpp \
     grammarperformer\grammarloader\grammarloader.cpp \
     grammarperformer\grammarloader\grammarloaderprivate.cpp \
     grammarperformer\grammarloader\grammarnativeloader.cpp \
     grammarperformer\grammarloader\grammarjsonloader.cpp \
     grammarperformer\wordsgenerator.cpp \
-    grammarperformer\grammarperformer.cpp
+    grammarperformer\grammarperformer.cpp \
+    mainwindow.cpp \
+    roofui/roofimage.cpp \
+    roofui/roofimagesmodel.cpp \
+    roofui/roofimagedelegate.cpp
 
 HEADERS += \
     grammarperformer\generatorapi.h \
-    rule.h \
+    grammarperformer\rule.h \
     basepainter.h \
     elementaryblock.h \
     flowpainter.h \
-    roof.h \
     grammarperformer\grammarloader\grammarloader.h \
     grammarperformer\grammarloader\grammarloaderprivate.h \
     grammarperformer\grammarloader\grammarnativeloader.h \
     grammarperformer\grammarloader\grammarjsonloader.h \
     grammarperformer\wordsgenerator.h \
-    grammarperformer\grammarperformer.h
+    grammarperformer\grammarperformer.h \
+    mainwindow.h \
+    roofui/roofimage.h \
+    roofui/roofimagesmodel.h \
+    roofui/roofimagedelegate.h
 
 RESOURCES += \
     list.qrc

@@ -11,17 +11,22 @@ class QPainter;
 class BasePainter
 {
 public:
-    BasePainter(){}
+    BasePainter();
     virtual ~BasePainter();
 
-    virtual void paint(QString rawString, QGraphicsScene* scene) = 0;
+    virtual QGraphicsScene* paint(QString rawString) = 0;
+    virtual QImage* paintImage(QString rawString) = 0;
     int loadBlocks(QString blockFile);
+
+    bool getIsLoad() const;
+
 private:
     bool check();
 protected:
     int currentLevel;
     int currentElem;
     QMap<QString, ElementaryBlock*> blockList;
+    bool isLoad;
 };
 
 #endif // BASEPAINTER_H
