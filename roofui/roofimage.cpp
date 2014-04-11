@@ -10,7 +10,8 @@ RoofImage::RoofImage() :
 
 RoofImage::~RoofImage()
 {
-    delete image;
+    if(!image->isNull())
+        delete image;
 }
 
 RoofImage::RoofImage(QImage* _image, int _level):

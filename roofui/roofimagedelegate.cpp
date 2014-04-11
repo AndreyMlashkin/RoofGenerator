@@ -1,6 +1,8 @@
 #include "roofimagedelegate.h"
 #include <QPainter>
 #include <QDebug>
+#include <QEvent>
+#include <QResizeEvent>
 #include "RoofImagesModel.h"
 #include "roofimage.h"
 
@@ -10,7 +12,7 @@ void RoofImageDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
         return;
 
     RoofImage* roof = reinterpret_cast<RoofImage*>(index.internalPointer());
-    if (roof) {
+    if (roof && !roof->getImage()->isNull()){
         painter->drawImage(option.rect, *(roof->getImage()));
 //        painter->drawText(option.rect, QString::number(index.row()+1)+QString(" ")+QString::number(option.state, 2));
         if(option.state.testFlag(QStyle::State_Selected)){

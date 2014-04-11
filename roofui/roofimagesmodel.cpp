@@ -46,6 +46,7 @@ void RoofImagesModel::addItem(RoofImage *newItem)
 {
     roofList.append(newItem);
     dataChanged(QModelIndex(), QModelIndex());
+     emit layoutChanged();
 }
 
 void RoofImagesModel::changeMode()
