@@ -14,31 +14,37 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    grammargenerator.cpp \
-    rule.cpp \
+    grammarperformer\rule.cpp \
     basepainter.cpp \
     elementaryblock.cpp \
     flowpainter.cpp \
-    roof.cpp \
-    grammarloader\grammarloader.cpp \
-    grammarloader\grammarloaderprivate.cpp \
-    grammarloader\grammarnativeloader.cpp \
-    grammarloader\grammarjsonloader.cpp \
-    wordsgenerator.cpp
+    grammarperformer\grammarloader\grammarloader.cpp \
+    grammarperformer\grammarloader\grammarloaderprivate.cpp \
+    grammarperformer\grammarloader\grammarnativeloader.cpp \
+    grammarperformer\grammarloader\grammarjsonloader.cpp \
+    grammarperformer\wordsgenerator.cpp \
+    grammarperformer\grammarperformer.cpp \
+    mainwindow.cpp \
+    roofui/roofimage.cpp \
+    roofui/roofimagesmodel.cpp \
+    roofui/roofimagedelegate.cpp
 
 HEADERS += \
-    generatorapi.h \
-    grammargenerator.h \
-    rule.h \
+    grammarperformer\generatorapi.h \
+    grammarperformer\rule.h \
     basepainter.h \
     elementaryblock.h \
     flowpainter.h \
-    roof.h \
-    grammarloader\grammarloader.h \
-    grammarloader\grammarloaderprivate.h \
-    grammarloader\grammarnativeloader.h \
-    grammarloader\grammarjsonloader.h \
-    wordsgenerator.h
+    grammarperformer\grammarloader\grammarloader.h \
+    grammarperformer\grammarloader\grammarloaderprivate.h \
+    grammarperformer\grammarloader\grammarnativeloader.h \
+    grammarperformer\grammarloader\grammarjsonloader.h \
+    grammarperformer\wordsgenerator.h \
+    grammarperformer\grammarperformer.h \
+    mainwindow.h \
+    roofui/roofimage.h \
+    roofui/roofimagesmodel.h \
+    roofui/roofimagedelegate.h
 
 RESOURCES += \
     list.qrc

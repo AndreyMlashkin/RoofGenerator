@@ -2,12 +2,15 @@
 #define FLOWPAINTER_H
 
 #include "basepainter.h"
+#include <QGraphicsScene>
+#include <QPainter>
 
 class FlowPainter : public BasePainter
 {
 public:
     FlowPainter();
-    void paint(QString rawString, QGraphicsScene *scene);
+    QGraphicsScene *paint(QString rawString);
+    QImage* paintImage(QString rawString);
 };
 
 #endif // FLOWPAINTER_H

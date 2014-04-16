@@ -14,12 +14,12 @@
 class GrammarLoader;
 class WordsGenerator;
 
-class GrammarGenerator : public QObject
+class GrammarPerformer : public QObject
 {
     Q_OBJECT
 public:
-    GrammarGenerator();
-    ~GrammarGenerator();
+    GrammarPerformer();
+    ~GrammarPerformer();
 
     void readGrammar(const QString& _filename);
     void beginGenerate(int _level);

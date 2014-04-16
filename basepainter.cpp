@@ -11,6 +11,10 @@ bool BasePainter::check()
 {
     return true;
 }
+bool BasePainter::getIsLoad() const
+{
+    return isLoad;
+}
 
 int BasePainter::loadBlocks(QString blockFile)
 {
@@ -36,7 +40,14 @@ int BasePainter::loadBlocks(QString blockFile)
         ElementaryBlock *eBlock = new ElementaryBlock(block["image"].toString(), block["char"].toString(), block["level"].toInt());
         blockList.insert(block["char"].toString(), eBlock);
     }
+    isLoad = true;
     return true;
+}
+
+BasePainter::BasePainter():
+    isLoad(false)
+{
+
 }
 
 BasePainter::~BasePainter(){

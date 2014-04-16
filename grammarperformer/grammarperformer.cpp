@@ -1,24 +1,24 @@
 #include <QDebug>
 
-#include "grammargenerator.h"
+#include "grammarperformer.h"
 #include "grammarloader/grammarjsonloader.h"
 #include "grammarloader/grammarnativeloader.h"
 #include "rule.h"
 #include "wordsgenerator.h"
 
-GrammarGenerator::GrammarGenerator()
+GrammarPerformer::GrammarPerformer()
     : m_maxLevel(-1),
       m_currentWordNum(0),
       m_loader(NULL),
       m_generator(NULL)
 {}
 
-GrammarGenerator::~GrammarGenerator()
+GrammarPerformer::~GrammarPerformer()
 {
     delete m_loader;
 }
 
-void GrammarGenerator::readGrammar(const QString& _filename)
+void GrammarPerformer::readGrammar(const QString& _filename)
 {
     LoaderType type = LoaderType(-1);
     try
@@ -40,7 +40,7 @@ void GrammarGenerator::readGrammar(const QString& _filename)
         m_loader->parceGrammar(_filename);
 }
 
-void GrammarGenerator::beginGenerate(int _level)
+void GrammarPerformer::beginGenerate(int _level)
 {
     reset();
 
@@ -60,7 +60,7 @@ void GrammarGenerator::beginGenerate(int _level)
 //    m_generator = NULL;
 }
 
-bool GrammarGenerator::isValid() const
+bool GrammarPerformer::isValid() const
 {
     if(m_loader)
         if(m_loader->isValid())
@@ -69,7 +69,7 @@ bool GrammarGenerator::isValid() const
     return false;
 }
 
-void GrammarGenerator::reset()
+void GrammarPerformer::reset()
 {
     m_currentWordNum = 0;
     m_maxLevel = -1;
@@ -80,19 +80,19 @@ void GrammarGenerator::reset()
     m_orderedClasteredTerminalWords.clear();
 }
 
-bool GrammarGenerator::isNextWord()
+bool GrammarPerformer::isNextWord()
 {
     QMutexLocker locker(&m_mutex);
     return m_currentWordNum < m_orderedClasteredTerminalWords.size();
 }
 
-Word GrammarGenerator::nextWord()
+Word GrammarPerformer::nextWord()
 {
     ++m_currentWordNum;
     return m_orderedClasteredTerminalWords[m_currentWordNum-1];
 }
 
-void GrammarGenerator::generatorFinished()
+void GrammarPerformer::generatorFinished()
 {
     WordsGenerator* finisher = dynamic_cast<WordsGenerator*>(sender());
     Q_ASSERT(finisher);
@@ -103,7 +103,7 @@ void GrammarGenerator::generatorFinished()
     delete finisher;
 }
 
-GrammarLoader *GrammarGenerator::getLoader(GrammarGenerator::LoaderType _type)
+GrammarLoader *GrammarPerformer::getLoader(GrammarPerformer::LoaderType _type)
 {
     if(_type == Json)
         return new GrammarJsonLoader();
@@ -113,7 +113,7 @@ GrammarLoader *GrammarGenerator::getLoader(GrammarGenerator::LoaderType _type)
         return NULL;
 }
 
-void GrammarGenerator::merge(QVector<QSet<Word> > _words)
+void GrammarPerformer::merge(QVector<QSet<Word> > _words)
 {
     QMutexLocker locker(&m_mutex);
 
@@ -142,7 +142,7 @@ void GrammarGenerator::merge(QVector<QSet<Word> > _words)
     m_clasteredTerminalWords += clusteredIncoming;
 }
 
-void GrammarGenerator::separateTemAndUnterm(const QVector<Word>& _common, QSet<Word>& _terminal, QSet<Word>& _unterminal)
+void GrammarPerformer::separateTemAndUnterm(const QVector<Word>& _common, QSet<Word>& _terminal, QSet<Word>& _unterminal)
 {
     foreach(Word w, _common)
     {
@@ -161,7 +161,7 @@ void GrammarGenerator::separateTemAndUnterm(const QVector<Word>& _common, QSet<W
     }
 }
 
-bool GrammarGenerator::isTerminal(const Word& _word)
+bool GrammarPerformer::isTerminal(const Word& _word)
 {
     bool isTerminal = true;
     foreach(QString s, m_loader->unterminalSymbols())
