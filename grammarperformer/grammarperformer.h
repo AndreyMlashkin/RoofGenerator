@@ -6,6 +6,9 @@
 #include <QVector>
 #include <QSet>
 
+#include <QThread>
+#include <QMutex>
+
 #include "generatorapi.h"
 
 class GrammarLoader;
@@ -51,6 +54,9 @@ private:
 
     GrammarLoader* m_loader;
     WordsGenerator* m_generator;
+
+    QThread m_generationThread;
+    QMutex m_mutex;
 };
 
 #endif // GRAMMARGENERATOR_H

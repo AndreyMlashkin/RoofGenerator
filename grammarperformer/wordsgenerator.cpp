@@ -1,15 +1,17 @@
 #include <QDebug>
+#include <QMutex>
 
 #include "wordsgenerator.h"
 #include "grammarloader/grammarloader.h"
 #include "rule.h"
 
-WordsGenerator::WordsGenerator(GrammarLoader* _loader) :
+WordsGenerator::WordsGenerator(GrammarLoader* _loader, QMutex& _mutex) :
     QObject(),
     isFinished(false),
     m_maxLevel(-1),
     m_loader(_loader->clone()),
-    m_generatedWords()
+    m_generatedWords(),
+    m_mutex(_mutex)
 {}
 
 void WordsGenerator::begin(int _level)
