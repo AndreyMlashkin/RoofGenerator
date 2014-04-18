@@ -22,14 +22,7 @@ int RoofImagesModel::columnCount(const QModelIndex &) const
 
 QVariant RoofImagesModel::data(const QModelIndex &index, int ) const
 {
-    int currentIndex = realIndex(index.row(), index.column());
-    if(index.isValid() && currentIndex<roofList.count()){
-        RoofImage *currentRoof = roofList[currentIndex];
-        QVariant var;
-        var.setValue(*currentRoof);
-        return var;
-    }else
-        return QVariant();
+    return QVariant();
 }
 
 QModelIndex RoofImagesModel::index(int row, int column, const QModelIndex &parent) const

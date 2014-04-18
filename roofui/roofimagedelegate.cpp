@@ -25,6 +25,8 @@ void RoofImageDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 
 QSize RoofImageDelegate::sizeHint(const QStyleOptionViewItem&, const QModelIndex &index) const
 {
+    if(!index.isValid())
+        return QSize(150,100);
     QAbstractItemModel* tmp = const_cast<QAbstractItemModel*>(index.model());
     RoofImagesModel *model = qobject_cast<RoofImagesModel*>(tmp);
     if(model)
