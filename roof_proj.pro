@@ -27,7 +27,8 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     roofui/roofimage.cpp \
     roofui/roofimagesmodel.cpp \
-    roofui/roofimagedelegate.cpp
+    roofui/roofimagedelegate.cpp \
+    grammarperformer/wordsgeneratorthread.cpp
 
 HEADERS += \
     grammarperformer\generatorapi.h \
@@ -44,7 +45,8 @@ HEADERS += \
     mainwindow.h \
     roofui/roofimage.h \
     roofui/roofimagesmodel.h \
-    roofui/roofimagedelegate.h
+    roofui/roofimagedelegate.h \
+    grammarperformer/wordsgeneratorthread.h
 
 RESOURCES += \
     list.qrc

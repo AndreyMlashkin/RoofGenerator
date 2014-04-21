@@ -6,10 +6,11 @@
 #include <QVector>
 #include <QSet>
 
-#include <QThread>
+//#include <QThread>
 #include <QMutex>
 
 #include "generatorapi.h"
+#include "wordsgeneratorthread.h"
 
 class GrammarLoader;
 class WordsGenerator;
@@ -42,6 +43,8 @@ private:
 
     bool isTerminal(const Word& _word);
 
+    void updateBufer();
+
 private:
     int m_maxLevel;
     int m_currentWordNum;
@@ -53,9 +56,8 @@ private:
     QVector <Word> m_orderedClasteredTerminalWords;
 
     GrammarLoader* m_loader;
-    WordsGenerator* m_generator;
 
-    QThread m_generationThread;
+    WordsGeneratorThread m_generationThread;
     QMutex m_mutex;
 };
 

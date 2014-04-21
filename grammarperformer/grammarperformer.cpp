@@ -9,8 +9,7 @@
 GrammarPerformer::GrammarPerformer()
     : m_maxLevel(-1),
       m_currentWordNum(0),
-      m_loader(NULL),
-      m_generator(NULL)
+      m_loader(NULL)
 {}
 
 GrammarPerformer::~GrammarPerformer()
@@ -48,13 +47,18 @@ void GrammarPerformer::beginGenerate(int _level)
     m_terminalWords.resize  (_level + 1);
     m_maxLevel = _level;
 
-    m_generator = new WordsGenerator(m_loader, m_mutex);
-    m_generator->moveToThread(&m_generationThread);
+    WordsGenerator* generator = new WordsGenerator(m_loader, m_mutex);
+    m_generationThread.setGenerator(generator);
+    //    delete m_generator;
+//    m_generator = new WordsGenerator(m_loader, m_mutex);
+//    m_generator->moveToThread(&m_generationThread);
 
-    connect(m_generator, SIGNAL(finished()), this, SLOT(generatorFinished()));
+
+
+    connect(generator, SIGNAL(finished()), this, SLOT(generatorFinished()));//, Qt::BlockingQueuedConnection);
   //  connect(m_generationThread, SIGNAL(finished()), m_generator, SLOT(deleteLater()));
 
-    m_generator->begin(_level);
+    m_generationThread.generateTillLevel(_level);
 
 //    delete m_generator;
 //    m_generator = NULL;
@@ -83,17 +87,24 @@ void GrammarPerformer::reset()
 bool GrammarPerformer::isNextWord()
 {
     QMutexLocker locker(&m_mutex);
+    if(!m_generationThread.isFinished())
+        return true;
+
+    qDebug() << "isNextWord";
     return m_currentWordNum < m_orderedClasteredTerminalWords.size();
 }
 
 Word GrammarPerformer::nextWord()
 {
     ++m_currentWordNum;
+    updateBufer();
+
     return m_orderedClasteredTerminalWords[m_currentWordNum-1];
 }
 
 void GrammarPerformer::generatorFinished()
 {
+    qDebug() << "finished";
     WordsGenerator* finisher = dynamic_cast<WordsGenerator*>(sender());
     Q_ASSERT(finisher);
 
@@ -173,4 +184,13 @@ bool GrammarPerformer::isTerminal(const Word& _word)
         }
     }
     return isTerminal;
+}
+
+void GrammarPerformer::updateBufer()
+{
+    if(m_orderedClasteredTerminalWords.size() < m_currentWordNum)
+    {
+        QMutexLocker locker(&m_mutex);
+        merge(m_generationThread.generator()->generatedWords());
+    }
 }
