@@ -1,0 +1,13 @@
+QPushButton {
+     color: red;
+}
+
+QTableView::item
+{
+  border: 0px;
+  padding: 5px;
+}
+
+QLabel{
+	border: 1px solid black;
+}

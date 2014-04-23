@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QGraphicsItem>
 #include <QDebug>
+#include <QFile>
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent),
@@ -22,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->listView, SIGNAL(clicked(QModelIndex)), SLOT(clickTableElement(QModelIndex)));
 
     loadPainter();
+    on_loadButton_clicked();
 }
 
 void MainWindow::loadPainter()
@@ -97,4 +99,15 @@ void MainWindow::on_backButton_clicked()
         ui->stackedWidget->setCurrentIndex(0);
         ui->backButton->setEnabled(false);
     }
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    QFile File("style.qss");
+    if(!File.open(QFile::ReadOnly)){
+        File.setFileName(":/style.qss");
+        File.open(QFile::ReadOnly);
+    }
+    QString StyleSheet = QLatin1String(File.readAll());
+    qApp->setStyleSheet(StyleSheet);
 }

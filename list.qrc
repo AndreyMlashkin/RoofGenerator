@@ -8,5 +8,6 @@
         <file>data/horizSlopeTube.png</file>
         <file>data/blocks.json</file>
         <file>data/rules.json</file>
+        <file>style.qss</file>
     </qresource>
 </RCC>
