@@ -16,7 +16,7 @@ bool BasePainter::getIsLoad() const
     return isLoad;
 }
 
-int BasePainter::loadBlocks(QString blockFile)
+int BasePainter::loadBlocks(QString blockFile, QString _name)
 {
     QFile jsonFile(blockFile);
     if (!jsonFile.open(QIODevice::ReadOnly)) {
@@ -40,14 +40,21 @@ int BasePainter::loadBlocks(QString blockFile)
         ElementaryBlock *eBlock = new ElementaryBlock(block["image"].toString(), block["char"].toString(), block["level"].toInt());
         blockList.insert(block["char"].toString(), eBlock);
     }
+
+    if(_name != "")
+        name = _name;
     isLoad = true;
     return true;
 }
 
-BasePainter::BasePainter():
-    isLoad(false)
+QString BasePainter::getName()
 {
+    return name;
+}
 
+BasePainter::BasePainter():
+    isLoad(false), name("unnamed style")
+{
 }
 
 BasePainter::~BasePainter(){

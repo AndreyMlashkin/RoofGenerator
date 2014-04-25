@@ -7,7 +7,9 @@
 #include "flowpainter.h"
 #include "roofui/roofimagedelegate.h"
 #include "roofui/roofimagesmodel.h"
+#include "roofui/listtotableproxy.h"
 #include "grammarperformer/grammarperformer.h"
+#include "ui_askDialog.h"
 
 namespace Ui
 {
@@ -33,11 +35,20 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_pushButton_2_clicked();
+
+    void fillModelByGenerator(int level = 6, int styleNum = 1);
+
 private:
-    BasePainter *painter;
+    QVector<BasePainter *> painters;
     Ui::roof *ui;
+
     RoofImageDelegate *imageDelegate;
     RoofImagesModel *model;
+    ListToTableProxy *proxyModel;
+
+    Ui_askDialog *askUi;
+    QDialog *askDialog;
 
     void resizeEvent(QResizeEvent*);
     void updateTable();

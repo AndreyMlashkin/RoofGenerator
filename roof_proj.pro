@@ -28,7 +28,7 @@ SOURCES += main.cpp \
     roofui/roofimage.cpp \
     roofui/roofimagesmodel.cpp \
     roofui/roofimagedelegate.cpp \
-    listtotableproxy.cpp
+    roofui/listtotableproxy.cpp
 
 HEADERS += \
     grammarperformer\generatorapi.h \
@@ -46,10 +46,12 @@ HEADERS += \
     roofui/roofimage.h \
     roofui/roofimagesmodel.h \
     roofui/roofimagedelegate.h \
-    listtotableproxy.h
+    listtotableproxy.h \
+    roofui/listtotableproxy.h
 
 RESOURCES += \
     list.qrc
 
 FORMS += \
-    roof.ui
+    roof.ui \
+    askDialog.ui

@@ -62,6 +62,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>важная кнопка</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>

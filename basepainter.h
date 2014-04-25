@@ -16,7 +16,8 @@ public:
 
     virtual QGraphicsScene* paint(QString rawString) = 0;
     virtual QImage* paintImage(QString rawString) = 0;
-    int loadBlocks(QString blockFile);
+    int loadBlocks(QString blockFile, QString _name = "");
+    QString getName();
 
     bool getIsLoad() const;
 
@@ -27,6 +28,7 @@ protected:
     int currentElem;
     QMap<QString, ElementaryBlock*> blockList;
     bool isLoad;
+    QString name;
 };
 
 #endif // BASEPAINTER_H

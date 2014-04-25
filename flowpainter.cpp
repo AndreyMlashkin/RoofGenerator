@@ -17,7 +17,6 @@ int border(int level){
 
 QGraphicsScene* FlowPainter::paint(QString rawString)
 {
-    qDebug()<<isLoad;
     if(!isLoad)
         return NULL;
     QGraphicsScene* scene = new QGraphicsScene;

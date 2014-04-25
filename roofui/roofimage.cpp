@@ -14,9 +14,10 @@ RoofImage::~RoofImage()
         delete image;
 }
 
-RoofImage::RoofImage(QImage* _image, int _level):
-    image(_image), level(_level)
+RoofImage::RoofImage(QImage* _image, int _level, QString _rawString):
+    image(_image), level(_level), rawString(_rawString)
 {
+//    qDebug()<<_image<<_level<<_rawString;
 }
 
 QImage *RoofImage::getImage() const
@@ -37,3 +38,13 @@ void RoofImage::setLevel(int value)
 {
     level = value;
 }
+QString RoofImage::getRawString() const
+{
+    return rawString;
+}
+
+void RoofImage::setRawString(const QString &value)
+{
+    rawString = value;
+}
+

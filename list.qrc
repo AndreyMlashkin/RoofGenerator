@@ -6,8 +6,22 @@
         <file>data/rightSlope.png</file>
         <file>data/rightSlopeTube.png</file>
         <file>data/horizSlopeTube.png</file>
-        <file>data/blocks.json</file>
         <file>data/rules.json</file>
         <file>style.qss</file>
+        <file>data/01_2.png</file>
+        <file>data/01_3.png</file>
+        <file>data/02_2.png</file>
+        <file>data/02_3.png</file>
+        <file>data/03_2.png</file>
+        <file>data/03_3.png</file>
+        <file>data/04_2.png</file>
+        <file>data/04_3.png</file>
+        <file>data/05_2.png</file>
+        <file>data/05_3.png</file>
+        <file>data/06_2.png</file>
+        <file>data/06_3.png</file>
+        <file>data/style1.json</file>
+        <file>data/style2.json</file>
+        <file>data/style3.json</file>
     </qresource>
 </RCC>

@@ -6,6 +6,12 @@ QTableView::item
 {
   border: 0px;
   padding: 5px;
+ /* margin: 15px;*/
+  border: 1px solid black;
+}
+QTableViewItem{
+  margin: 15px;
+  border: 1px solid black;
 }
 
 QLabel{

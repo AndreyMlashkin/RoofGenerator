@@ -28,20 +28,18 @@ public:
 
     QSize getBlockSize() const;
 
+    QVector<RoofImage *> getRoofList() const;
+
 public slots:
-    void changeMode();
-    void updateColumnByWidth(int _size);
 
 private:
     int realIndex(int row, int column) const;
 
 private:
     const QSize blockSize;
-    int widgetSize;
-    int columnNum;
     allState state;
 
-    QVector <RoofImage *> roofList;
+    QVector<RoofImage *> roofList;
 };
 
 #endif // ROOFIMAGESMODEL_H
