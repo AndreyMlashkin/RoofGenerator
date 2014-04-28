@@ -9,13 +9,14 @@
 GrammarPerformer::GrammarPerformer()
     : m_maxLevel(-1),
       m_currentWordNum(0),
-      m_loader(NULL)
+      m_loader(NULL),
+      m_generationThread(NULL)
 {}
 
 GrammarPerformer::~GrammarPerformer()
 {
-    if(m_generationThread.isRunning())
-        m_generationThread.exit();
+    if(m_generationThread->isRunning())
+        m_generationThread->exit();
     delete m_loader;
 }
 
@@ -49,18 +50,18 @@ void GrammarPerformer::beginGenerate(int _level)
     m_terminalWords.resize  (_level + 1);
     m_maxLevel = _level;
 
+    delete m_generationThread;
     WordsGenerator* generator = new WordsGenerator(m_loader, m_mutex);
-    m_generationThread.setGenerator(generator);
+    m_generationThread = new WordsGeneratorThread(generator);
     //    delete m_generator;
 //    m_generator = new WordsGenerator(m_loader, m_mutex);
 //    m_generator->moveToThread(&m_generationThread);
 
 
-
     connect(generator, SIGNAL(finished()), this, SLOT(generatorFinished()));//, Qt::BlockingQueuedConnection);
   //  connect(m_generationThread, SIGNAL(finished()), m_generator, SLOT(deleteLater()));
 
-    m_generationThread.generateTillLevel(_level);
+    m_generationThread->generateTillLevel(_level);
 
 //    delete m_generator;
 //    m_generator = NULL;
@@ -89,7 +90,7 @@ void GrammarPerformer::reset()
 bool GrammarPerformer::isNextWord()
 {
     QMutexLocker locker(&m_mutex);
-    if(!m_generationThread.isFinished())
+    if(!m_generationThread->isFinished())
         return true;
 
     qDebug() << "isNextWord";
@@ -112,7 +113,7 @@ void GrammarPerformer::generatorFinished()
 
     merge(finisher->generatedWords());
 
-    m_generationThread.quit();
+    m_generationThread->quit();
 }
 
 GrammarLoader *GrammarPerformer::getLoader(GrammarPerformer::LoaderType _type)
@@ -192,6 +193,6 @@ void GrammarPerformer::updateBufer()
     if(m_orderedClasteredTerminalWords.size() < m_currentWordNum)
     {
         QMutexLocker locker(&m_mutex);
-        merge(m_generationThread.generator()->generatedWords());
+        merge(m_generationThread->generator()->generatedWords());
     }
 }

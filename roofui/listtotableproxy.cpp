@@ -22,14 +22,14 @@ QModelIndex ListToTableProxy::mapFromSource(const QModelIndex &sourceIndex) cons
     return createIndex(sourceIndex.column()%columnNum, sourceIndex.column()/columnNum);
 }
 
-QModelIndex ListToTableProxy::parent(const QModelIndex &child) const
+QModelIndex ListToTableProxy::parent(const QModelIndex &) const
 {
     return QModelIndex();
 }
 
-QModelIndex ListToTableProxy::index(int row, int column, const QModelIndex &parent) const
+QModelIndex ListToTableProxy::index(int row, int column, const QModelIndex&) const
 {
-    if(row<0 || column<0)
+    if(row < 0 || column < 0)
         return QModelIndex();
     RoofImage *currentRoof = NULL;
     int columnNum = getColumnNum();

@@ -7,11 +7,8 @@
 QT       += core gui widgets
 
 TARGET = roof_proj
-CONFIG   += console
-CONFIG   -= app_bundle
-
 TEMPLATE = app
-
+CONFIG   -= app_bundle
 
 SOURCES += main.cpp \
     grammarperformer\rule.cpp \
@@ -23,13 +20,13 @@ SOURCES += main.cpp \
     grammarperformer\grammarloader\grammarnativeloader.cpp \
     grammarperformer\grammarloader\grammarjsonloader.cpp \
     grammarperformer\wordsgenerator.cpp \
+    grammarperformer/wordsgeneratorthread.cpp \
     grammarperformer\grammarperformer.cpp \
     mainwindow.cpp \
     roofui/roofimage.cpp \
     roofui/roofimagesmodel.cpp \
     roofui/roofimagedelegate.cpp \
     roofui/listtotableproxy.cpp
-    grammarperformer/wordsgeneratorthread.cpp
 
 HEADERS += \
     grammarperformer\generatorapi.h \
@@ -42,6 +39,7 @@ HEADERS += \
     grammarperformer\grammarloader\grammarnativeloader.h \
     grammarperformer\grammarloader\grammarjsonloader.h \
     grammarperformer\wordsgenerator.h \
+    grammarperformer/wordsgeneratorthread.h \
     grammarperformer\grammarperformer.h \
     mainwindow.h \
     roofui/roofimage.h \
@@ -49,7 +47,6 @@ HEADERS += \
     roofui/roofimagedelegate.h \
     listtotableproxy.h \
     roofui/listtotableproxy.h
-    grammarperformer/wordsgeneratorthread.h
 
 RESOURCES += \
     list.qrc

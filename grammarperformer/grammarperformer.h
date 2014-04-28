@@ -57,7 +57,7 @@ private:
 
     GrammarLoader* m_loader;
 
-    WordsGeneratorThread m_generationThread;
+    WordsGeneratorThread* m_generationThread;
     QMutex m_mutex;
 };
 

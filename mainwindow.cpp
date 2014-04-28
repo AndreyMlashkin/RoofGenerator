@@ -8,9 +8,15 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::roof)
+    ui(new Ui::roof),
+    imageDelegate(NULL),
+    model(NULL),
+    proxyModel(NULL),
+    askUi(NULL),
+    askDialog(NULL)
 {
     ui->setupUi(this);
+
     imageDelegate = new RoofImageDelegate;
 
     ui->listView->setItemDelegate(imageDelegate);
@@ -34,6 +40,14 @@ MainWindow::MainWindow(QWidget *parent) :
     on_pushButton_clicked();
 }
 
+MainWindow::~MainWindow()
+{
+    delete model;
+    delete imageDelegate;
+    delete ui;
+    delete askUi;
+}
+
 void MainWindow::loadPainter()
 {
     for(int i = 1; i<=3;i++){
@@ -41,14 +55,6 @@ void MainWindow::loadPainter()
         p->loadBlocks(QString(":data/style")+QString::number(i)+QString(".json"), QString("Стиль ")+QString::number(i));
         painters.append(p);
     }
-}
-
-MainWindow::~MainWindow()
-{
-    delete model;
-    delete imageDelegate;
-    delete ui;
-    delete askUi;
 }
 
 void MainWindow::on_loadButton_clicked()
@@ -67,6 +73,9 @@ void MainWindow::on_loadButton_clicked()
     }
     delete askDialog;
     delete askUi;
+
+    askDialog = NULL;
+    askUi = NULL;
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)
@@ -83,7 +92,7 @@ void MainWindow::updateTable()
 
 void MainWindow::fillModelByGenerator(int level, int styleNum)
 {
-    level = level>3 && level<10 ? level : 6;
+    level = level>=3 && level<10 ? level : 6;
     styleNum = styleNum<painters.count() ? styleNum : 1;
     GrammarPerformer g;
 

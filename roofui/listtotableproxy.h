@@ -2,7 +2,7 @@
 #define LISTTOTABLEPROXY_H
 
 #include <QAbstractProxyModel>
-#include "roofui/roofimagesmodel.h"
+#include "roofimagesmodel.h"
 
 class ListToTableProxy : public QAbstractProxyModel
 {
@@ -11,8 +11,8 @@ public:
     explicit ListToTableProxy(QObject *parent = 0);
     QModelIndex mapToSource(const QModelIndex &proxyIndex) const;
     QModelIndex mapFromSource(const QModelIndex &sourceIndex) const;
-    QModelIndex parent(const QModelIndex &child) const;
-    QModelIndex index(int row, int column, const QModelIndex &parent) const;
+    QModelIndex parent(const QModelIndex &) const;
+    QModelIndex index(int row, int column, const QModelIndex&) const;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;

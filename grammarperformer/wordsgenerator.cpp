@@ -40,9 +40,11 @@ const QVector<QSet<Word> > WordsGenerator::generatedWords() const
 
 void WordsGenerator::generate(int _level, const Word &_word)
 {
-    qDebug() << "generate";
     if(_level == m_maxLevel)
+    {
+        qDebug() << _word;
         return;
+    }
 
     foreach(Rule* rule, m_loader->rules())
     {
