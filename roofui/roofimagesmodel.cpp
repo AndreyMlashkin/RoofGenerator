@@ -20,12 +20,12 @@ int RoofImagesModel::columnCount(const QModelIndex &) const
       return 1;//columnNum;
 }
 
-QVariant RoofImagesModel::data(const QModelIndex &index, int ) const
+QVariant RoofImagesModel::data(const QModelIndex&, int ) const
 {
     return QVariant();
 }
 
-QModelIndex RoofImagesModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex RoofImagesModel::index(int row, int column, const QModelIndex&) const
 {
     RoofImage *currentRoof = NULL;
     int currentIndex = realIndex(row, column);
