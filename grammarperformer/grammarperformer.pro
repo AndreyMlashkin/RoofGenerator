@@ -16,6 +16,7 @@ SOURCES += main.cpp \
     grammarloader\grammarnativeloader.cpp \
     grammarloader\grammarjsonloader.cpp \
     wordsgenerator.cpp \
+    wordsgeneratorthread.cpp \
     grammarperformer.cpp
 
 HEADERS += \
@@ -25,6 +26,7 @@ HEADERS += \
     grammarloader\grammarloaderprivate.h \
     grammarloader\grammarnativeloader.h \
     grammarloader\grammarjsonloader.h \
+    wordsgeneratorthread.h \
     wordsgenerator.h \
     grammarperformer.h \
 

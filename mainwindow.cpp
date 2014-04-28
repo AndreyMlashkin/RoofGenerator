@@ -38,7 +38,7 @@ void MainWindow::loadPainter()
 {
     for(int i = 1; i<=3;i++){
         BasePainter *p = new FlowPainter;
-        p->loadBlocks(QString(":data/style")+QString::number(i)+QString(".json"), QString("РЎС‚РёР»СЊ ")+QString::number(i));
+        p->loadBlocks(QString(":data/style")+QString::number(i)+QString(".json"), QString("Стиль ")+QString::number(i));
         painters.append(p);
     }
 }

@@ -28,7 +28,7 @@ SOURCES += main.cpp \
     roofui/roofimage.cpp \
     roofui/roofimagesmodel.cpp \
     roofui/roofimagedelegate.cpp \
-	roofui/listtotableproxy.cpp
+    roofui/listtotableproxy.cpp
     grammarperformer/wordsgeneratorthread.cpp
 
 HEADERS += \
@@ -49,7 +49,7 @@ HEADERS += \
     roofui/roofimagedelegate.h \
     listtotableproxy.h \
     roofui/listtotableproxy.h
-	grammarperformer/wordsgeneratorthread.h
+    grammarperformer/wordsgeneratorthread.h
 
 RESOURCES += \
     list.qrc
