@@ -45,7 +45,7 @@ void MainWindow::on_loadButton_clicked()
     g.readGrammar("://data/rules.json");
     qDebug() << g.isValid();
 
-    g.beginGenerate(5);
+    g.beginGenerate(4);
 
     while(g.isNextWord())
     {

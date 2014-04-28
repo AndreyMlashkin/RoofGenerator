@@ -14,6 +14,8 @@ GrammarPerformer::GrammarPerformer()
 
 GrammarPerformer::~GrammarPerformer()
 {
+    if(m_generationThread.isRunning())
+        m_generationThread.exit();
     delete m_loader;
 }
 
@@ -111,7 +113,6 @@ void GrammarPerformer::generatorFinished()
     merge(finisher->generatedWords());
 
     m_generationThread.quit();
-    delete finisher;
 }
 
 GrammarLoader *GrammarPerformer::getLoader(GrammarPerformer::LoaderType _type)

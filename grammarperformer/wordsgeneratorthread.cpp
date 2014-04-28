@@ -31,7 +31,7 @@ void WordsGeneratorThread::generateTillLevel(int _level)
     m_generator->begin(_level);
 }
 
-const WordsGenerator * const WordsGeneratorThread::generator() const
+const WordsGenerator* const WordsGeneratorThread::generator() const
 {
     return m_generator;
 }
