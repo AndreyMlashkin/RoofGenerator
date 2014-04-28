@@ -65,6 +65,8 @@ void MainWindow::on_loadButton_clicked()
         fillModelByGenerator(askUi->level->value(), askUi->styleList->currentIndex());
         ui->loadButton->setEnabled(false);
     }
+    delete askDialog;
+    delete askUi;
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)
