@@ -7,8 +7,10 @@
 #include <QStringList>
 #include <QDebug>
 
-bool BasePainter::check()
+bool BasePainter::check(QString rawString)
 {
+    if(rawString.length() == 0 || rawString.count("||") || rawString[0] == '|')
+        return false;
     return true;
 }
 bool BasePainter::getIsLoad() const

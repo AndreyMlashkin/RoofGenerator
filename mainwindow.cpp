@@ -5,6 +5,8 @@
 #include <QGraphicsItem>
 #include <QDebug>
 #include <QFile>
+#include <QRegExpValidator>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent),
@@ -13,7 +15,9 @@ MainWindow::MainWindow(QWidget *parent) :
     model(NULL),
     proxyModel(NULL),
     askUi(NULL),
-    askDialog(NULL)
+    askDialog(NULL),
+    ownDrawUi(NULL),
+    ownDrawDialog(NULL)
 {
     ui->setupUi(this);
 
@@ -37,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     loadPainter();
   //  on_loadButton_clicked();
 
-    on_pushButton_clicked();
+    reloadCss();
 }
 
 MainWindow::~MainWindow()
@@ -46,6 +50,8 @@ MainWindow::~MainWindow()
     delete imageDelegate;
     delete ui;
     delete askUi;
+    delete ownDrawUi;
+    delete ownDrawDialog;
 }
 
 void MainWindow::loadPainter()
@@ -80,7 +86,7 @@ void MainWindow::on_loadButton_clicked()
 
 void MainWindow::resizeEvent(QResizeEvent*)
 {
-    emit mySizeChanged(ui->tableView->width()-200);
+    emit mySizeChanged(ui->tableView->width()-150);
 }
 
 void MainWindow::updateTable()
@@ -110,7 +116,6 @@ void MainWindow::fillModelByGenerator(int level, int styleNum)
         RoofImage *r = new RoofImage(painter->paintImage(generated), 1, generated);
         model->addItem(r);
     }
-    qDebug()<<styleNum;
     updateTable();
 }
 
@@ -137,10 +142,8 @@ void MainWindow::on_backButton_clicked()
     }
 }
 
-
-
-
-void MainWindow::on_pushButton_clicked()
+/* Перезагрузить css */
+void MainWindow::reloadCss()
 {
     QFile File("style.qss");
     if(!File.open(QFile::ReadOnly)){
@@ -151,7 +154,32 @@ void MainWindow::on_pushButton_clicked()
     qApp->setStyleSheet(StyleSheet);
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::initOwnDrawDialog()
 {
-    proxyModel->updateTable();
+    ownDrawDialog = new QDialog(0,0);
+    ownDrawUi = new Ui_ownDrawDialog;
+    ownDrawUi->setupUi(ownDrawDialog);
+    foreach(BasePainter* p, painters){
+        ownDrawUi->styleList->addItem(p->getName());
+    }
+    connect(ownDrawUi->drawRoof, SIGNAL(clicked()), this, SLOT(drawOwnRoof()));
+    ownDrawUi->rawString->setValidator(new QRegExpValidator(QRegExp("[/|\\\\]+")));
+}
+
+void MainWindow::on_ownDrawOpen_clicked()
+{
+    if(ownDrawDialog == NULL)
+        initOwnDrawDialog();
+    ownDrawDialog->show();
+}
+
+void MainWindow::drawOwnRoof()
+{
+    QString userString = ownDrawUi->rawString->text();
+    delete ownDrawUi->graphicsView->scene();
+    QGraphicsScene *scene = painters[ownDrawUi->styleList->currentIndex()]->paint(userString);
+    if(scene!=NULL)
+        ownDrawUi->graphicsView->setScene(scene);
+    else
+        QMessageBox::warning(this, "Ошибка", "Неверная строка");
 }

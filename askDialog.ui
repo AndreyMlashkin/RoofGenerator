@@ -88,7 +88,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Создай себе крышы!</string>
+    <string>Создай себе крыши!</string>
    </property>
   </widget>
   <widget class="QSpinBox" name="level">

@@ -56,16 +56,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="ownDrawOpen">
        <property name="text">
-        <string>reload css</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_2">
-       <property name="text">
-        <string>важная кнопка</string>
+        <string>Нарисовать свою крышу</string>
        </property>
       </widget>
      </item>

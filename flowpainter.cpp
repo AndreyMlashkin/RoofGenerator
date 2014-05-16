@@ -19,6 +19,8 @@ QGraphicsScene* FlowPainter::paint(QString rawString)
 {
     if(!isLoad)
         return NULL;
+    if(!check(rawString))
+        return NULL;
     QGraphicsScene* scene = new QGraphicsScene;
 //    scene->setSceneRect(0,0,300,450);
 

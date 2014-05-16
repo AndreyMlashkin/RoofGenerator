@@ -10,6 +10,7 @@
 #include "roofui/listtotableproxy.h"
 #include "grammarperformer/grammarperformer.h"
 #include "ui_askDialog.h"
+#include "ui_ownDraw.h"
 
 namespace Ui
 {
@@ -35,14 +36,17 @@ signals:
 private slots:
     void on_loadButton_clicked();
     void on_backButton_clicked();
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
+    void reloadCss();
 
     void fillModelByGenerator(int level = 6, int styleNum = 1);
+
+    void on_ownDrawOpen_clicked();
+    void drawOwnRoof();
 
 private:
     void resizeEvent(QResizeEvent*);
     void updateTable();
+    void initOwnDrawDialog();
 
 private:
     QVector<BasePainter *> painters;
@@ -54,6 +58,9 @@ private:
 
     Ui_askDialog *askUi;
     QDialog *askDialog;
+
+    Ui_ownDrawDialog *ownDrawUi;
+    QDialog *ownDrawDialog;
 };
 
 #endif // ROOF_H

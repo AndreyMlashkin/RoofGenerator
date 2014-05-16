@@ -21,8 +21,8 @@ public:
 
     bool getIsLoad() const;
 
-private:
-    bool check();
+protected:
+    bool check(QString rawString);
 protected:
     int currentLevel;
     int currentElem;
