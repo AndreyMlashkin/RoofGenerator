@@ -42,7 +42,7 @@ void WordsGenerator::generate(int _level, const Word &_word)
 {
     if(_level == m_maxLevel)
     {
-        qDebug() << _word;
+//        qDebug() << _word;
         return;
     }
 

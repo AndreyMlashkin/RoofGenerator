@@ -54,4 +54,5 @@ RESOURCES += \
 FORMS += \
     roof.ui \
     askDialog.ui \
-    ownDraw.ui
+    ownDraw.ui \
+    loading.ui

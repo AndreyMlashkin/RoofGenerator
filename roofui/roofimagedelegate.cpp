@@ -15,7 +15,7 @@ void RoofImageDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
     RoofImage* roof = reinterpret_cast<RoofImage*>(index.internalPointer());
     if (roof && !roof->getImage()->isNull()){
         painter->drawImage(option.rect, *(roof->getImage()));
-        painter->drawText(option.rect, QString::number(index.row())+QString(" ")+QString::number(option.state));
+        painter->drawText(option.rect, roof->getRawString());
         if(option.state.testFlag(QStyle::State_Selected)){
             painter->drawRoundRect(option.rect);
         }

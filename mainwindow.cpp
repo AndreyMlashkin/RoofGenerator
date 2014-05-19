@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_roof.h"
+#include "ui_loading.h"
 #include <QGraphicsView>
 #include <QLabel>
 #include <QGraphicsItem>
@@ -7,6 +8,7 @@
 #include <QFile>
 #include <QRegExpValidator>
 #include <QMessageBox>
+#include <QMovie>
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent),
@@ -65,6 +67,13 @@ void MainWindow::loadPainter()
 
 void MainWindow::on_loadButton_clicked()
 {
+    Ui_loadingDialog* loading_ui = new Ui_loadingDialog;
+    QDialog *loadingDialog = new QDialog(0,0);
+    loading_ui->setupUi(loadingDialog);
+    QMovie *movie = new QMovie(":/data/loading.gif");
+    loading_ui->animation->setMovie(movie);
+    movie->start();
+
     askDialog = new QDialog(0,0);
     askUi = new Ui_askDialog;
     askUi->setupUi(askDialog);
@@ -73,20 +82,27 @@ void MainWindow::on_loadButton_clicked()
     }
 
     if(askDialog->exec()){
-        qDebug()<<askUi->styleList->currentIndex();
+        loadingDialog->show();
+        model->clearAll();
         fillModelByGenerator(askUi->level->value(), askUi->styleList->currentIndex());
-        ui->loadButton->setEnabled(false);
+//        ui->loadButton->setEnabled(false);
     }
     delete askDialog;
     delete askUi;
 
     askDialog = NULL;
     askUi = NULL;
+
+    loadingDialog->hide();
+    delete loadingDialog;
+    delete loading_ui;
+    delete movie;
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)
 {
     emit mySizeChanged(ui->tableView->width()-150);
+    updateTable();
 }
 
 void MainWindow::updateTable()
@@ -124,6 +140,7 @@ void MainWindow::clickTableElement(const QModelIndex &index)
     RoofImage* roof = reinterpret_cast<RoofImage*>(index.internalPointer());
     if (roof){
         ui->label->setPixmap(QPixmap::fromImage(*(roof->getImage())));
+        ui->rawString->setText(roof->getRawString());
         ui->listView->scrollTo(proxyModel->mapToSource(index), QAbstractItemView::PositionAtCenter);
         ui->listView->selectionModel()->select(proxyModel->mapToSource(index), QItemSelectionModel::Select);
     }

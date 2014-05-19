@@ -20,6 +20,7 @@ public:
 
 
     void addItem(RoofImage *newItem);
+    void clearAll();
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const;
 

@@ -25,7 +25,7 @@ void WordsGeneratorThread::setGenerator(WordsGenerator* _generator)
 
 void WordsGeneratorThread::generateTillLevel(int _level)
 {
-    qDebug() << isRunning();
+//    qDebug() << isRunning();
     m_generator->moveToThread(this);
     start();
     m_generator->begin(_level);

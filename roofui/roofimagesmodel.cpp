@@ -42,6 +42,13 @@ void RoofImagesModel::addItem(RoofImage *newItem)
     emit layoutChanged();
 }
 
+void RoofImagesModel::clearAll()
+{
+    roofList.clear();
+    emit dataChanged(QModelIndex(), QModelIndex());
+    emit layoutChanged();
+}
+
 int RoofImagesModel::realIndex(int row, int column) const
 {
     return row*1/*columnNum*/ + column;

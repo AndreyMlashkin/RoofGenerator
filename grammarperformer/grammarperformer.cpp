@@ -93,7 +93,7 @@ bool GrammarPerformer::isNextWord()
     if(!m_generationThread->isFinished())
         return true;
 
-    qDebug() << "isNextWord";
+//    qDebug() << "isNextWord";
     return m_currentWordNum < m_orderedClasteredTerminalWords.size();
 }
 
