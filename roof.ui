@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>887</width>
+    <width>826</width>
     <height>516</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Roof generator</string>
+   <string>Генератор крыш</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="list.qrc">
+    <normaloff>:/data/icon.png</normaloff>:/data/icon.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
@@ -169,6 +173,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="list.qrc"/>
+ </resources>
  <connections/>
 </ui>

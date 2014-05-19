@@ -3,21 +3,18 @@
 #include <QtGlobal>
 
 RoofImagesModel::RoofImagesModel(QObject *parent) :
-    QAbstractListModel(parent), blockSize(100, 150), state(TABLE)
+    QAbstractListModel(parent), blockSize(150, 100), state(TABLE)
 {
 }
 
 int RoofImagesModel::rowCount(const QModelIndex &) const
 {
-//    if(state == LIST)
         return roofList.count();
-/*    else
-        return qRound((qreal)(roofList.count()/(columnNum)))+1;*/
 }
 
 int RoofImagesModel::columnCount(const QModelIndex &) const
 {
-      return 1;//columnNum;
+      return 1;
 }
 
 QVariant RoofImagesModel::data(const QModelIndex&, int ) const
@@ -51,7 +48,7 @@ void RoofImagesModel::clearAll()
 
 int RoofImagesModel::realIndex(int row, int column) const
 {
-    return row*1/*columnNum*/ + column;
+    return row + column;
 }
 QVector<RoofImage *> RoofImagesModel::getRoofList() const
 {

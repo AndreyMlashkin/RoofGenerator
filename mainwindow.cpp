@@ -101,7 +101,8 @@ void MainWindow::on_loadButton_clicked()
 
 void MainWindow::resizeEvent(QResizeEvent*)
 {
-    emit mySizeChanged(ui->tableView->width()-150);
+ //   emit mySizeChanged(ui->tableView->viewport()->width());
+       emit mySizeChanged(ui->tableView->width());
     updateTable();
 }
 

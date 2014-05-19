@@ -46,7 +46,8 @@ int ListToTableProxy::rowCount(const QModelIndex &parent) const
     if(parent.isValid())
           return 0;
     RoofImagesModel *source = dynamic_cast<RoofImagesModel *>(sourceModel());
-//    qDebug()<<" row: "<<(qRound((qreal)(source->getRoofList().count()/(getColumnNum())))+1);
+    if(source->getRoofList().count() == 0)
+        return 0;
     return qRound((qreal)(source->getRoofList().count()/(getColumnNum())))+1;
 }
 
@@ -54,14 +55,16 @@ int ListToTableProxy::columnCount(const QModelIndex &parent) const
 {
     if(parent.isValid())
           return 0;
-//    qDebug()<< "column: "<<getColumnNum();
     return getColumnNum();
 }
 
 int ListToTableProxy::getColumnNum() const
 {
     RoofImagesModel *source = dynamic_cast<RoofImagesModel *>(sourceModel());
-    return widgetSize/source->getBlockSize().width();
+    int columnNum = widgetSize/source->getBlockSize().width();
+    if(columnNum == 0)
+        return 1;
+    return columnNum;
 }
 
 void ListToTableProxy::updateColumnByWidth(int _size){

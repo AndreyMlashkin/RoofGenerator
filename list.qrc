@@ -24,5 +24,6 @@
         <file>data/style2.json</file>
         <file>data/style3.json</file>
         <file>data/loading.gif</file>
+        <file>data/icon.png</file>
     </qresource>
 </RCC>
