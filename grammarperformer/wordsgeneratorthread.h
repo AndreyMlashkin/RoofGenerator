@@ -16,7 +16,7 @@ public:
     void setGenerator(WordsGenerator* _generator);
     void generateTillLevel(int _level);
 
-    const WordsGenerator* const generator() const;
+    const WordsGenerator* generator() const;
 
 private:
     QMutex m_mutex;
