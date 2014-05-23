@@ -1,5 +1,4 @@
 #include <QDebug>
-#include <QMutexLocker>
 
 #include "wordsgeneratorthread.h"
 #include "wordsgenerator.h"

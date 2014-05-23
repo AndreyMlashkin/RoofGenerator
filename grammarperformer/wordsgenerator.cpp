@@ -1,17 +1,16 @@
 #include <QDebug>
-#include <QMutex>
+#include <QThread>
 
 #include "wordsgenerator.h"
 #include "grammarloader/grammarloader.h"
 #include "rule.h"
 
-WordsGenerator::WordsGenerator(GrammarLoader* _loader, QMutex& _mutex) :
+WordsGenerator::WordsGenerator(GrammarLoader* _loader) :
     QObject(),
     isFinished(false),
     m_maxLevel(-1),
     m_loader(_loader->clone()),
-    m_generatedWords(),
-    m_mutex(_mutex)
+    m_generatedWords()
 {}
 
 void WordsGenerator::begin(int _level)
@@ -40,6 +39,7 @@ const QVector<QSet<Word> > WordsGenerator::generatedWords() const
 
 void WordsGenerator::generate(int _level, const Word &_word)
 {
+    qDebug() << "generator: " << QThread::currentThreadId();
     if(_level == m_maxLevel)
     {
 //        qDebug() << _word;

@@ -2,7 +2,6 @@
 #define WORDSGENERATORTHREAD_H
 
 #include <QThread>
-#include <QMutexLocker>
 
 class WordsGenerator;
 
@@ -19,7 +18,6 @@ public:
     const WordsGenerator* generator() const;
 
 private:
-    QMutex m_mutex;
     WordsGenerator* m_generator;
 };
 

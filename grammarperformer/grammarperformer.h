@@ -6,7 +6,6 @@
 #include <QVector>
 #include <QSet>
 
-//#include <QThread>
 #include <QMutex>
 
 #include "generatorapi.h"

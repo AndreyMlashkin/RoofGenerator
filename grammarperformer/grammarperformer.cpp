@@ -11,7 +11,9 @@ GrammarPerformer::GrammarPerformer()
       m_currentWordNum(0),
       m_loader(NULL),
       m_generationThread(NULL)
-{}
+{
+    qDebug() << "start thread: " << thread();
+}
 
 GrammarPerformer::~GrammarPerformer()
 {
@@ -51,14 +53,14 @@ void GrammarPerformer::beginGenerate(int _level)
     m_maxLevel = _level;
 
     delete m_generationThread;
-    WordsGenerator* generator = new WordsGenerator(m_loader, m_mutex);
+    WordsGenerator* generator = new WordsGenerator(m_loader);
     m_generationThread = new WordsGeneratorThread(generator);
     //    delete m_generator;
 //    m_generator = new WordsGenerator(m_loader, m_mutex);
 //    m_generator->moveToThread(&m_generationThread);
 
 
-    connect(generator, SIGNAL(finished()), this, SLOT(generatorFinished()));//, Qt::BlockingQueuedConnection);
+    connect(generator, SIGNAL(finished()), this, SLOT(generatorFinished())); //, Qt::BlockingQueuedConnection);
   //  connect(m_generationThread, SIGNAL(finished()), m_generator, SLOT(deleteLater()));
 
     m_generationThread->generateTillLevel(_level);
@@ -89,10 +91,10 @@ void GrammarPerformer::reset()
 
 bool GrammarPerformer::isNextWord()
 {
-    QMutexLocker locker(&m_mutex);
+//    QMutexLocker locker(&m_mutex);
     if(!m_generationThread->isFinished())
         return true;
-
+//    locker.unlock();
 //    qDebug() << "isNextWord";
     return m_currentWordNum < m_orderedClasteredTerminalWords.size();
 }
@@ -128,8 +130,6 @@ GrammarLoader *GrammarPerformer::getLoader(GrammarPerformer::LoaderType _type)
 
 void GrammarPerformer::merge(QVector<QSet<Word> > _words)
 {
-    QMutexLocker locker(&m_mutex);
-
     int lvl = 0;
     QSet<Word> clusteredIncoming;
     foreach(QSet<Word> set, _words)
@@ -192,6 +192,7 @@ void GrammarPerformer::updateBufer()
 {
     if(m_orderedClasteredTerminalWords.size() < m_currentWordNum)
     {
+        qDebug() << "I'll lock you!: " << QThread::currentThreadId();
         QMutexLocker locker(&m_mutex);
         merge(m_generationThread->generator()->generatedWords());
     }
