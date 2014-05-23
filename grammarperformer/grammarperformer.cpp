@@ -10,16 +10,24 @@ GrammarPerformer::GrammarPerformer()
     : m_maxLevel(-1),
       m_currentWordNum(0),
       m_loader(NULL),
-      m_generationThread(NULL)
-{
-    qDebug() << "start thread: " << thread();
-}
+      m_generationThread(NULL),
+      m_isFinished(false)
+{}
 
 GrammarPerformer::~GrammarPerformer()
 {
     if(m_generationThread->isRunning())
         m_generationThread->exit();
     delete m_loader;
+}
+
+bool GrammarPerformer::isValid() const
+{
+    if(m_loader)
+        if(m_loader->isValid())
+            return true;
+
+    return false;
 }
 
 void GrammarPerformer::readGrammar(const QString& _filename)
@@ -46,6 +54,7 @@ void GrammarPerformer::readGrammar(const QString& _filename)
 
 void GrammarPerformer::beginGenerate(int _level)
 {
+    m_isFinished = false;
     reset();
 
     m_unterminalWords.resize(_level + 1);
@@ -55,27 +64,16 @@ void GrammarPerformer::beginGenerate(int _level)
     delete m_generationThread;
     WordsGenerator* generator = new WordsGenerator(m_loader);
     m_generationThread = new WordsGeneratorThread(generator);
-    //    delete m_generator;
-//    m_generator = new WordsGenerator(m_loader, m_mutex);
-//    m_generator->moveToThread(&m_generationThread);
 
-
-    connect(generator, SIGNAL(finished()), this, SLOT(generatorFinished())); //, Qt::BlockingQueuedConnection);
-  //  connect(m_generationThread, SIGNAL(finished()), m_generator, SLOT(deleteLater()));
+    Qt::ConnectionType directThreadSafe = static_cast<Qt::ConnectionType>(Qt::BlockingQueuedConnection | Qt::DirectConnection);
+    connect(m_generationThread, SIGNAL(finished()), this, SLOT(generatorFinished()), directThreadSafe);
 
     m_generationThread->generateTillLevel(_level);
-
-//    delete m_generator;
-//    m_generator = NULL;
 }
 
-bool GrammarPerformer::isValid() const
+bool GrammarPerformer::isFinished() const
 {
-    if(m_loader)
-        if(m_loader->isValid())
-            return true;
-
-    return false;
+    return m_isFinished;
 }
 
 void GrammarPerformer::reset()
@@ -91,31 +89,25 @@ void GrammarPerformer::reset()
 
 bool GrammarPerformer::isNextWord()
 {
-//    QMutexLocker locker(&m_mutex);
     if(!m_generationThread->isFinished())
         return true;
-//    locker.unlock();
-//    qDebug() << "isNextWord";
+
     return m_currentWordNum < m_orderedClasteredTerminalWords.size();
 }
 
 Word GrammarPerformer::nextWord()
 {
     ++m_currentWordNum;
-    updateBufer();
-
+    Q_ASSERT(m_currentWordNum-1 < m_orderedClasteredTerminalWords.size());
     return m_orderedClasteredTerminalWords[m_currentWordNum-1];
 }
 
 void GrammarPerformer::generatorFinished()
 {
     qDebug() << "finished";
-    WordsGenerator* finisher = dynamic_cast<WordsGenerator*>(sender());
-    Q_ASSERT(finisher);
 
-    merge(finisher->generatedWords());
-
-    m_generationThread->quit();
+    merge(m_generationThread->result());
+    m_isFinished = true;
 }
 
 GrammarLoader *GrammarPerformer::getLoader(GrammarPerformer::LoaderType _type)
@@ -130,6 +122,7 @@ GrammarLoader *GrammarPerformer::getLoader(GrammarPerformer::LoaderType _type)
 
 void GrammarPerformer::merge(QVector<QSet<Word> > _words)
 {
+    qDebug() << "merge";
     int lvl = 0;
     QSet<Word> clusteredIncoming;
     foreach(QSet<Word> set, _words)
@@ -186,14 +179,4 @@ bool GrammarPerformer::isTerminal(const Word& _word)
         }
     }
     return isTerminal;
-}
-
-void GrammarPerformer::updateBufer()
-{
-    if(m_orderedClasteredTerminalWords.size() < m_currentWordNum)
-    {
-        qDebug() << "I'll lock you!: " << QThread::currentThreadId();
-        QMutexLocker locker(&m_mutex);
-        merge(m_generationThread->generator()->generatedWords());
-    }
 }

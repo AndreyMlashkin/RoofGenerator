@@ -20,10 +20,11 @@ class GrammarPerformer : public QObject
 public:
     GrammarPerformer();
     ~GrammarPerformer();
+    bool isValid() const;
 
     void readGrammar(const QString& _filename);
     void beginGenerate(int _level);
-    bool isValid() const;
+    bool isFinished() const;
 
     void reset();
     bool isNextWord();
@@ -42,8 +43,6 @@ private:
 
     bool isTerminal(const Word& _word);
 
-    void updateBufer();
-
 private:
     int m_maxLevel;
     int m_currentWordNum;
@@ -57,7 +56,7 @@ private:
     GrammarLoader* m_loader;
 
     WordsGeneratorThread* m_generationThread;
-    QMutex m_mutex;
+    bool m_isFinished;
 };
 
 #endif // GRAMMARGENERATOR_H

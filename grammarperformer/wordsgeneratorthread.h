@@ -2,11 +2,14 @@
 #define WORDSGENERATORTHREAD_H
 
 #include <QThread>
+#include <QMutex>
+#include "generatorapi.h"
 
 class WordsGenerator;
 
 class WordsGeneratorThread : public QThread
 {
+    Q_OBJECT
 public:
     WordsGeneratorThread();
     WordsGeneratorThread(WordsGenerator* _generator);
@@ -15,10 +18,14 @@ public:
     void setGenerator(WordsGenerator* _generator);
     void generateTillLevel(int _level);
 
-    const WordsGenerator* generator() const;
+    QVector <QSet<Word> > result() const;
+
+private:
+    void run();
 
 private:
     WordsGenerator* m_generator;
+    QMutex m_mutex;
 };
 
 #endif // WORDSGENERATORTHREAD_H

@@ -7,11 +7,17 @@
 
 WordsGenerator::WordsGenerator(GrammarLoader* _loader) :
     QObject(),
-    isFinished(false),
+    m_isFinished(false),
     m_maxLevel(-1),
+    m_level(0),
     m_loader(_loader->clone()),
     m_generatedWords()
 {}
+
+void WordsGenerator::begin()
+{
+    begin(m_level);
+}
 
 void WordsGenerator::begin(int _level)
 {
@@ -20,12 +26,17 @@ void WordsGenerator::begin(int _level)
     foreach (Word w, m_loader->startWords())
         generate(0, w);
 
-    emit finished();
+    m_isFinished = true;
+}
+
+void WordsGenerator::setLevel(int _level)
+{
+    m_level = _level;
 }
 
 bool WordsGenerator::isValid() const
 {
-    if(m_loader)
+    if(m_loader && m_level > 0)
         if(m_loader->isValid())
             return true;
 
@@ -37,14 +48,15 @@ const QVector<QSet<Word> > WordsGenerator::generatedWords() const
     return m_generatedWords;
 }
 
+bool WordsGenerator::isFinished() const
+{
+    return m_isFinished;
+}
+
 void WordsGenerator::generate(int _level, const Word &_word)
 {
-    qDebug() << "generator: " << QThread::currentThreadId();
     if(_level == m_maxLevel)
-    {
-//        qDebug() << _word;
         return;
-    }
 
     foreach(Rule* rule, m_loader->rules())
     {

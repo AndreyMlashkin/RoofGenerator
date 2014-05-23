@@ -124,6 +124,11 @@ void MainWindow::fillModelByGenerator(int level, int styleNum)
 
     g.beginGenerate(level);
     BasePainter *painter = painters[styleNum];
+
+    while(!g.isFinished())
+        qApp->processEvents();
+
+    qDebug() << "thread finished, apply images!";
     while(g.isNextWord())
     {
         QString generated = g.nextWord();
