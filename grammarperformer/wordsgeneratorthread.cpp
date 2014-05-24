@@ -9,8 +9,8 @@ WordsGeneratorThread::WordsGeneratorThread()
     : m_generator(NULL)
 {}
 
-WordsGeneratorThread::WordsGeneratorThread(WordsGenerator* _generator)
-    : m_generator(_generator)
+WordsGeneratorThread::WordsGeneratorThread(GrammarLoader* _loader)
+    : m_generator(new WordsGenerator(_loader))
 {}
 
 WordsGeneratorThread::~WordsGeneratorThread()
@@ -19,11 +19,11 @@ WordsGeneratorThread::~WordsGeneratorThread()
     delete m_generator;
 }
 
-void WordsGeneratorThread::setGenerator(WordsGenerator* _generator)
+void WordsGeneratorThread::setGenerator(GrammarLoader* _loader)
 {
     QMutexLocker locker(&m_mutex);
     delete m_generator;
-    m_generator = _generator;
+    m_generator = new WordsGenerator(_loader);
 }
 
 void WordsGeneratorThread::generateTillLevel(int _level)

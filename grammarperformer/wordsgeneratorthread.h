@@ -6,16 +6,17 @@
 #include "generatorapi.h"
 
 class WordsGenerator;
+class GrammarLoader;
 
 class WordsGeneratorThread : public QThread
 {
     Q_OBJECT
 public:
     WordsGeneratorThread();
-    WordsGeneratorThread(WordsGenerator* _generator);
+    WordsGeneratorThread(GrammarLoader* _loader);
     ~WordsGeneratorThread();
 
-    void setGenerator(WordsGenerator* _generator);
+    void setGenerator(GrammarLoader* _loader);
     void generateTillLevel(int _level);
 
     QVector <QSet<Word> > result() const;

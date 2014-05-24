@@ -4,7 +4,6 @@
 #include "grammarloader/grammarjsonloader.h"
 #include "grammarloader/grammarnativeloader.h"
 #include "rule.h"
-#include "wordsgenerator.h"
 
 GrammarPerformer::GrammarPerformer()
     : m_maxLevel(-1),
@@ -62,8 +61,7 @@ void GrammarPerformer::beginGenerate(int _level)
     m_maxLevel = _level;
 
     delete m_generationThread;
-    WordsGenerator* generator = new WordsGenerator(m_loader);
-    m_generationThread = new WordsGeneratorThread(generator);
+    m_generationThread = new WordsGeneratorThread(m_loader);
 
     Qt::ConnectionType directThreadSafe = static_cast<Qt::ConnectionType>(Qt::BlockingQueuedConnection | Qt::DirectConnection);
     connect(m_generationThread, SIGNAL(finished()), this, SLOT(generatorFinished()), directThreadSafe);
