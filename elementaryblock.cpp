@@ -13,10 +13,19 @@ ElementaryBlock::ElementaryBlock(QString uri, QString _character, int _levelChan
     }
 }
 
+ElementaryBlock::ElementaryBlock(const ElementaryBlock &_block)
+   : image(_block.image),
+     character(_block.character),
+     levelChange(_block.levelChange),
+     width(_block.width),
+     height(_block.height)
+{}
+
 ElementaryBlock::~ElementaryBlock()
 {
     delete image;
 }
+
 QPixmap *ElementaryBlock::getImage() const
 {
     return image;

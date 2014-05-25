@@ -8,7 +8,9 @@ class ElementaryBlock
 {
 public:
     ElementaryBlock(QString uri, QString _character, int _levelChange);
+    ElementaryBlock(const ElementaryBlock& _block);
     ~ElementaryBlock();
+
     QPixmap *getImage() const;
     void setImage(QPixmap *value);
 
