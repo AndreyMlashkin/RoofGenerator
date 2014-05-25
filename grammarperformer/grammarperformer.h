@@ -6,13 +6,11 @@
 #include <QVector>
 #include <QSet>
 
-#include <QMutex>
-
 #include "generatorapi.h"
-#include "wordsgeneratorthread.h"
 
 class GrammarLoader;
 class WordsGenerator;
+class WordsGeneratorThread;
 
 class GrammarPerformer : public QObject
 {

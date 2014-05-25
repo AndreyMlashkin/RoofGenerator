@@ -9,6 +9,10 @@ GrammarLoader::GrammarLoader()
 
 GrammarLoader& GrammarLoader::operator =(const GrammarLoader& _loader)
 {
+    if(&_loader == this)
+        return *this;
+
+    delete p;
     p = new GrammarLoaderPrivate(*_loader.p);
     return *this;
 }

@@ -4,8 +4,9 @@
 #include <QAbstractListModel>
 #include <QVector>
 #include <QVariant>
+#include <QSize>
 #include <QDebug>
-#include "roofimage.h"
+class RoofImage;
 
 class RoofImagesModel : public QAbstractListModel
 {

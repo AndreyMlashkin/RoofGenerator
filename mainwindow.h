@@ -3,12 +3,7 @@
 
 #include <QWidget>
 #include <QString>
-#include <QGraphicsScene>
-#include "flowpainter.h"
-#include "roofui/roofimagedelegate.h"
-#include "roofui/roofimagesmodel.h"
-#include "roofui/listtotableproxy.h"
-#include "grammarperformer/grammarperformer.h"
+
 #include "ui_askDialog.h"
 #include "ui_ownDraw.h"
 
@@ -16,6 +11,12 @@ namespace Ui
 {
     class roof;
 }
+
+class BasePainter;
+class RoofImageDelegate;
+class RoofImagesModel;
+class ListToTableProxy;
+class GrammarPerformer;
 
 class MainWindow : public QWidget
 {

@@ -1,6 +1,8 @@
-#include "roofimagesmodel.h"
 #include <QDebug>
 #include <QtGlobal>
+
+#include "roofimagesmodel.h"
+#include "roofimage.h"
 
 RoofImagesModel::RoofImagesModel(QObject *parent) :
     QAbstractListModel(parent), blockSize(150, 100), state(TABLE)

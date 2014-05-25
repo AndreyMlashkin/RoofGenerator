@@ -23,8 +23,6 @@ public:
     const QVector <QSet<Word> > generatedWords() const;
 
     bool isFinished() const;
-//signals:
-//    void finished();
 
 private:
     void generate(int _level, const Word& _word);

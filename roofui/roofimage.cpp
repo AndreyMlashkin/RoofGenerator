@@ -1,50 +1,52 @@
 #include "roofimage.h"
+
 #include <QPainter>
 #include <QDebug>
+#include <QImage>
 
 RoofImage::RoofImage() :
-    image(NULL)
+    m_image(NULL)
 {
     qDebug()<< Q_FUNC_INFO;
 }
 
 RoofImage::~RoofImage()
 {
-    if(!image->isNull())
-        delete image;
+    if(!m_image->isNull())
+        delete m_image;
 }
 
 RoofImage::RoofImage(QImage* _image, int _level, QString _rawString):
-    image(_image), level(_level), rawString(_rawString)
+    m_image(_image), m_level(_level), m_rawString(_rawString)
 {
 //    qDebug()<<_image<<_level<<_rawString;
 }
 
 QImage *RoofImage::getImage() const
 {
-    return image;
+    return m_image;
 }
 
 void RoofImage::setImage(QImage *value)
 {
-    image = value;
+    m_image = value;
 }
 int RoofImage::getLevel() const
 {
-    return level;
+    return m_level;
 }
 
 void RoofImage::setLevel(int value)
 {
-    level = value;
+    m_level = value;
 }
 QString RoofImage::getRawString() const
 {
-    return rawString;
+    return m_rawString;
 }
 
 void RoofImage::setRawString(const QString &value)
 {
-    rawString = value;
+    m_rawString = value;
 }
 

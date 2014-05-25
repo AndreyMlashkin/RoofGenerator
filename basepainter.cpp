@@ -1,11 +1,11 @@
-#include "basepainter.h"
-#include "elementaryblock.h"
-
+#include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QFile>
-#include <QStringList>
-#include <QDebug>
+#include <QGraphicsScene>
+
+#include "basepainter.h"
+#include "elementaryblock.h"
 
 bool BasePainter::check(QString rawString)
 {

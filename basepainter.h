@@ -3,10 +3,11 @@
 
 #include <QMap>
 #include <QString>
-#include <QGraphicsScene>
 
 class ElementaryBlock;
 class QPainter;
+class QGraphicsScene;
+class QImage;
 
 class BasePainter
 {
@@ -26,7 +27,7 @@ protected:
 protected:
     int currentLevel;
     int currentElem;
-    QMap<QString, ElementaryBlock*> blockList;
+    QMap <QString, ElementaryBlock*> blockList;
     bool isLoad;
     QString name;
 };

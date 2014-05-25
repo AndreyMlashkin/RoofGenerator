@@ -1,8 +1,10 @@
 #ifndef ROOFIMAGE_H
 #define ROOFIMAGE_H
+
 #include <QMetaType>
-#include <QImage>
 #include <QString>
+
+class QImage;
 class RoofImage
 {
 public:
@@ -19,9 +21,9 @@ public:
     void setRawString(const QString &value);
 
 private:
-    QImage *image;
-    int level;
-    QString rawString;
+    QImage *m_image;
+    int m_level;
+    QString m_rawString;
 };
 
 Q_DECLARE_METATYPE(RoofImage)

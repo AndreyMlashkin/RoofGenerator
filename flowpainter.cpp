@@ -1,6 +1,9 @@
-#include "flowpainter.h"
 #include <QDebug>
+#include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include <QPainter>
+
+#include "flowpainter.h"
 #include "elementaryblock.h"
 
 FlowPainter::FlowPainter()

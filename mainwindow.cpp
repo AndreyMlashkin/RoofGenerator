@@ -1,14 +1,21 @@
-#include "mainwindow.h"
-#include "ui_roof.h"
-#include "ui_loading.h"
-#include <QGraphicsView>
-#include <QLabel>
-#include <QGraphicsItem>
 #include <QDebug>
 #include <QFile>
 #include <QRegExpValidator>
 #include <QMessageBox>
 #include <QMovie>
+
+#include "mainwindow.h"
+#include "flowpainter.h"
+#include "ui_roof.h"
+#include "ui_loading.h"
+
+#include "roofui/roofimage.h"
+#include "roofui/roofimagedelegate.h"
+#include "roofui/roofimagesmodel.h"
+#include "roofui/listtotableproxy.h"
+
+#include "grammarperformer/grammarperformer.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent),
@@ -102,7 +109,7 @@ void MainWindow::on_loadButton_clicked()
 void MainWindow::resizeEvent(QResizeEvent*)
 {
  //   emit mySizeChanged(ui->tableView->viewport()->width());
-       emit mySizeChanged(ui->tableView->width());
+    emit mySizeChanged(ui->tableView->width());
     updateTable();
 }
 

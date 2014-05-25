@@ -1,8 +1,6 @@
 #ifndef GRAMMARJSONLOADER_H
 #define GRAMMARJSONLOADER_H
 
-#include <QStringList>
-#include <QVector>
 #include "grammarloader.h"
 
 class GrammarJsonLoader : public GrammarLoader

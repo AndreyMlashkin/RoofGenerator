@@ -2,8 +2,7 @@
 #define FLOWPAINTER_H
 
 #include "basepainter.h"
-#include <QGraphicsScene>
-#include <QPainter>
+class QGraphicsScene;
 
 class FlowPainter : public BasePainter
 {

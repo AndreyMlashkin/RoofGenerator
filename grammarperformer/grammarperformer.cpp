@@ -5,6 +5,8 @@
 #include "grammarloader/grammarnativeloader.h"
 #include "rule.h"
 
+#include "wordsgeneratorthread.h"
+
 GrammarPerformer::GrammarPerformer()
     : m_maxLevel(-1),
       m_currentWordNum(0),
