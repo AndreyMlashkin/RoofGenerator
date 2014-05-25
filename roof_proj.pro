@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets
+QT       += core gui widgets testlib
 
 TARGET = roof_proj
 TEMPLATE = app
@@ -26,7 +26,8 @@ SOURCES += main.cpp \
     roofui/roofimage.cpp \
     roofui/roofimagesmodel.cpp \
     roofui/roofimagedelegate.cpp \
-    roofui/listtotableproxy.cpp
+    roofui/listtotableproxy.cpp \
+    tests/testgrammar.cpp
 
 HEADERS += \
     grammarperformer\generatorapi.h \
@@ -46,7 +47,8 @@ HEADERS += \
     roofui/roofimagesmodel.h \
     roofui/roofimagedelegate.h \
     listtotableproxy.h \
-    roofui/listtotableproxy.h
+    roofui/listtotableproxy.h \
+    tests/testgrammar.h
 
 RESOURCES += \
     list.qrc
