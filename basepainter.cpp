@@ -7,15 +7,17 @@
 #include "basepainter.h"
 #include "elementaryblock.h"
 
-bool BasePainter::check(QString rawString)
+BasePainter::BasePainter()
+    : currentLevel(-1),
+      currentElem(-1),
+      isLoad(false),
+      name("unnamed style")
+{}
+
+BasePainter::~BasePainter()
 {
-    if(rawString.length() == 0 || rawString.count("||") || rawString[0] == '|')
-        return false;
-    return true;
-}
-bool BasePainter::getIsLoad() const
-{
-    return isLoad;
+    qDeleteAll( blockList );
+    blockList.clear();
 }
 
 int BasePainter::loadBlocks(QString blockFile, QString _name)
@@ -49,17 +51,19 @@ int BasePainter::loadBlocks(QString blockFile, QString _name)
     return true;
 }
 
-QString BasePainter::getName()
+QString BasePainter::getName() const
 {
     return name;
 }
 
-BasePainter::BasePainter():
-    isLoad(false), name("unnamed style")
+bool BasePainter::getIsLoad() const
 {
+    return isLoad;
 }
 
-BasePainter::~BasePainter(){
-    qDeleteAll( blockList );
-    blockList.clear();
+bool BasePainter::check(QString rawString)
+{
+    if(rawString.length() == 0 || rawString.count("||") || rawString[0] == '|')
+        return false;
+    return true;
 }

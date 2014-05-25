@@ -18,12 +18,13 @@ public:
     virtual QGraphicsScene* paint(QString rawString) = 0;
     virtual QImage* paintImage(QString rawString) = 0;
     int loadBlocks(QString blockFile, QString _name = "");
-    QString getName();
+    QString getName() const;
 
     bool getIsLoad() const;
 
 protected:
-    bool check(QString rawString);
+    static bool check(QString rawString);
+
 protected:
     int currentLevel;
     int currentElem;
